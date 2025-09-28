@@ -1,0 +1,121 @@
+import { Suspense } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
+import { Search, Grid, List } from "lucide-react"
+import { BirdGrid } from "@/components/bird-grid"
+import { BirdFilters } from "@/components/bird-filters"
+import { BirdStats } from "@/components/bird-stats"
+
+export default function AvesPage() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-16">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Catálogo de Aves de Nicaragua</h1>
+          <p className="text-xl text-green-100 max-w-2xl text-pretty">
+            Descubre las 342 especies de aves documentadas en nuestro país, desde el majestuoso Quetzal hasta el
+            colorido Guardabarranco
+          </p>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* Bird Statistics */}
+        <Suspense fallback={<div>Cargando estadísticas...</div>}>
+          <BirdStats />
+        </Suspense>
+
+        {/* Search and Filters */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Search className="h-5 w-5" />
+              Buscar Especies
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <div className="md:col-span-2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Input placeholder="Buscar por nombre común o científico..." className="pl-10" />
+                </div>
+              </div>
+
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Hábitat" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos los hábitats</SelectItem>
+                  <SelectItem value="bosque-nuboso">Bosque nuboso</SelectItem>
+                  <SelectItem value="bosque-seco">Bosque seco</SelectItem>
+                  <SelectItem value="manglar">Manglar</SelectItem>
+                  <SelectItem value="humedal">Humedal</SelectItem>
+                  <SelectItem value="volcanico">Volcánico</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Rareza" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todas las especies</SelectItem>
+                  <SelectItem value="comun">Común</SelectItem>
+                  <SelectItem value="poco-comun">Poco común</SelectItem>
+                  <SelectItem value="rara">Rara</SelectItem>
+                  <SelectItem value="endemica">Endémica</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Suspense fallback={<div>Cargando filtros...</div>}>
+              <BirdFilters />
+            </Suspense>
+          </CardContent>
+        </Card>
+
+        {/* Results Header */}
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">342 especies encontradas</h2>
+            <p className="text-gray-600">Mostrando todas las especies de aves de Nicaragua</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Select>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Ordenar por" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="name">Nombre A-Z</SelectItem>
+                <SelectItem value="name-desc">Nombre Z-A</SelectItem>
+                <SelectItem value="rarity">Rareza</SelectItem>
+                <SelectItem value="habitat">Hábitat</SelectItem>
+                <SelectItem value="recently-seen">Visto recientemente</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <div className="flex border rounded-lg">
+              <Button variant="ghost" size="sm" className="rounded-r-none">
+                <Grid className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="rounded-l-none">
+                <List className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Bird Grid */}
+        <Suspense fallback={<div>Cargando catálogo de aves...</div>}>
+          <BirdGrid />
+        </Suspense>
+      </div>
+    </div>
+  )
+}
