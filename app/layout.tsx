@@ -10,7 +10,7 @@ import { AuthProvider } from "@/contexts/auth-context"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "~Avithrave - Turismo Sostenible y Observación de Aves en Nicaragua",
+  title: "~Avithrive - Turismo Sostenible y Observación de Aves en Nicaragua",
   description:
     "Plataforma innovadora que gamifica la observación de aves y promueve el ecoturismo sostenible en Nicaragua. Descubre, aprende y conserva.",
   generator: "v0.app",

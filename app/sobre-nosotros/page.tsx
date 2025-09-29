@@ -90,7 +90,7 @@ export default function SobreNosotrosPage() {
       <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Sobre Avithrave</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Sobre Avithrive</h1>
             <p className="text-xl text-emerald-100 mb-8 text-pretty max-w-3xl mx-auto">
               Somos una plataforma innovadora que conecta a los amantes de las aves con la rica biodiversidad de
               Nicaragua, promoviendo el turismo sostenible y la educación inclusiva.
@@ -209,7 +209,7 @@ export default function SobreNosotrosPage() {
           <CardContent>
             <div className="prose prose-emerald max-w-none">
               <p className="text-gray-700 mb-4 text-pretty">
-                Avithrave nació en 2025 de la pasión compartida por las aves y el deseo de hacer el aviturismo más
+                Avithrive nació en 2025 de la pasión compartida por las aves y el deseo de hacer el aviturismo más
                 accesible para todos los nicaragüenses y visitantes. Nuestro equipo multidisciplinario, compuesto por
                 biólogos, educadores, guías locales y desarrolladores tecnológicos, identificó la necesidad de una
                 plataforma que no solo conectara a los observadores de aves con los mejores sitios del país, sino que
@@ -222,7 +222,7 @@ export default function SobreNosotrosPage() {
                 sostenible.
               </p>
               <p className="text-gray-700 text-pretty">
-                Hoy, Avithrave es más que una plataforma de aviturismo: es una comunidad vibrante de más de 2,000
+                Hoy, Avithrive es más que una plataforma de aviturismo: es una comunidad vibrante de más de 2,000
                 observadores de aves que comparten su pasión, aprenden juntos y contribuyen activamente a la
                 conservación de las más de 500 especies de aves que habitan en nuestro hermoso país.
               </p>

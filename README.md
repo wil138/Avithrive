@@ -1,4 +1,4 @@
-# Avitrave – Proyecto para Hackathon Disruptivo Nicaragua
+# Avithrive – Proyecto para Hackathon Disruptivo Nicaragua
 
 Avitravel es una plataforma web innovadora creada para impulsar el aviturismo en Nicaragua y concientizar a la juventud sobre la importancia de la conservación ambiental. 
 Este proyecto combina comunidad, gamificación y educación para promover experiencias únicas en la naturaleza, fomentando la competitividad saludable a través de un sistema de ranking.
@@ -31,9 +31,9 @@ Una vez iniciado el servidor, abre tu navegador y ve a:
    http://localhost:3000 
    
 O ingresea el siguiente link para ver sin descargar el proyecto:
-https://Avithrave.netlify.app
+https://Avithrive.netlify.app
 
-## Avitravel ofrece las siguientes secciones:
+## Avithrave ofrece las siguientes secciones:
 
 1. Página Principal (Home)
    - Header con navegación (Inicio, Excursiones, Comunidad, Aves, Educación, Sobre nosotros).

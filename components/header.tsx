@@ -18,7 +18,7 @@ export function Header() {
           <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
             <span className="text-white font-bold text-sm">A</span>
           </div>
-          <span className="font-bold text-xl text-foreground">Avitravel</span>
+          <span className="font-bold text-xl text-foreground">Avithrive</span>
         </Link>
 
         {/* Desktop Navigation */}

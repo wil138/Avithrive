@@ -46,7 +46,7 @@ export default function LoginPage() {
             <Bird className="h-6 w-6 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold">Iniciar Sesión</CardTitle>
-          <CardDescription>Accede a tu cuenta de Avithrave para continuar explorando</CardDescription>
+          <CardDescription>Accede a tu cuenta de Avithrive para continuar explorando</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
