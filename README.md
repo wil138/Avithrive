@@ -8,7 +8,7 @@ Este proyecto combina comunidad, gamificación y educación para promover experi
 ## INSTALACIÓN
 
 1. Clona este repositorio:
-   git clone (https://github.com/wil138/Avitrave.git)
+   git clone (https://github.com/wil138/Avithrave.git)
 
 2. Entra en la carpeta del proyecto:
    cd avitravel
@@ -31,7 +31,7 @@ Una vez iniciado el servidor, abre tu navegador y ve a:
    http://localhost:3000 
    
 O ingresea el siguiente link para ver sin descargar el proyecto:
-https://avitrave.netlify.app
+https://Avithrave.netlify.app
 
 ## Avitravel ofrece las siguientes secciones:
 
