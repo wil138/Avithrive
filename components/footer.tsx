@@ -16,7 +16,7 @@ export function Footer() {
               <span className="font-bold text-xl">Avithrive</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Promoviendo el turismo sostenible y la conservación de aves en Nicaragua desde 2024.
+              Promoviendo el turismo sostenible y la conservación de aves en Nicaragua desde 2025.
             </p>
             <div className="flex space-x-2">
               <Button variant="outline" size="sm">

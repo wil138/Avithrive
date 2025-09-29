@@ -18,7 +18,7 @@ export function Header() {
           <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
             <span className="text-white font-bold text-sm">A</span>
           </div>
-          <span className="font-bold text-xl text-foreground">Avithrive</span>
+          <span className="font-bold text-xl text-foreground">~Avithrive</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -53,7 +53,7 @@ export function Header() {
             </Badge>
             <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 border-emerald-200">
               <Star className="w-3 h-3 mr-1" />
-              1,250 pts
+              1,200 pts
             </Badge>
           </div>
 
