@@ -13,7 +13,7 @@ export function Footer() {
               <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
                 <span className="text-white font-bold text-sm">A</span>
               </div>
-              <span className="font-bold text-xl">Avitravel</span>
+              <span className="font-bold text-xl">Avithrive</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Promoviendo el turismo sostenible y la conservación de aves en Nicaragua desde 2024.
