@@ -5,7 +5,7 @@ import { MapPin, Mail, Phone, Facebook, Instagram, Twitter } from "lucide-react"
 export function Footer() {
   return (
     <footer className="bg-muted/50 border-t">
-      <div className="container py-12">
+      <div className="container-fluid py-12 px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">

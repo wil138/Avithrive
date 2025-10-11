@@ -39,7 +39,7 @@ const featuredBirds = [
 export function FeaturedBirds() {
   return (
     <section id="aves" className="py-16">
-      <div className="container">
+      <div className="container-fluid px-8">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-emerald-100 text-emerald-800 border-emerald-200">
             <Camera className="w-3 h-3 mr-1" />
@@ -53,9 +53,9 @@ export function FeaturedBirds() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredBirds.map((bird) => (
-            <Card key={bird.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card key={bird.id} className="hover:shadow-lg transition-shadow">
               <div className="relative">
-                <img src={bird.image || "/placeholder.svg"} alt={bird.name} className="w-full h-48 object-cover" />
+                <img src={bird.image || "/placeholder.svg"} alt={bird.name} className="w-full h-72 object-cover px-2" />
                 <div className="absolute top-3 left-3">
                   <Badge
                     className={`${

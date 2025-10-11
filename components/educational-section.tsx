@@ -49,7 +49,7 @@ const achievements = [
 export function EducationalSection() {
   return (
     <section id="educacion" className="py-16 bg-muted/30">
-      <div className="container">
+      <div className="container-fluid px-8">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-purple-100 text-purple-800 border-purple-200">
             <BookOpen className="w-3 h-3 mr-1" />

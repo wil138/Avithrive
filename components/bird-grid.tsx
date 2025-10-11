@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Eye, EyeOff, Heart, Volume2, MapPin, Camera, Star, Calendar } from "lucide-react"
 import Image from "next/image"
 
-const birds = [
+export const birds = [
   {
     id: 1,
     commonName: "Guardabarranco",
@@ -163,30 +163,43 @@ const birds = [
   },
 ]
 
-export function BirdGrid() {
-  const [seenBirds, setSeenBirds] = useState<Set<number>>(new Set([1, 3, 4]))
-  const [favoriteBirds, setFavoriteBirds] = useState<Set<number>>(new Set([1, 2]))
+export function BirdGrid({
+  items,
+  seenBirds: externalSeenBirds,
+  favoriteBirds: externalFavoriteBirds,
+  onToggleSeen,
+  onToggleFavorite,
+}: {
+  items?: typeof birds
+  seenBirds?: Set<number>
+  favoriteBirds?: Set<number>
+  onToggleSeen?: (id: number) => void
+  onToggleFavorite?: (id: number) => void
+}) {
+  const displayed = items ?? birds
+
+  const [internalSeen, setInternalSeen] = useState<Set<number>>(new Set([1, 3, 4]))
+  const [internalFav, setInternalFav] = useState<Set<number>>(new Set([1, 2]))
+
+  const seenBirds = externalSeenBirds ?? internalSeen
+  const favoriteBirds = externalFavoriteBirds ?? internalFav
 
   const toggleSeen = (birdId: number) => {
-    setSeenBirds((prev) => {
+    if (onToggleSeen) return onToggleSeen(birdId)
+    setInternalSeen((prev) => {
       const newSet = new Set(prev)
-      if (newSet.has(birdId)) {
-        newSet.delete(birdId)
-      } else {
-        newSet.add(birdId)
-      }
+      if (newSet.has(birdId)) newSet.delete(birdId)
+      else newSet.add(birdId)
       return newSet
     })
   }
 
   const toggleFavorite = (birdId: number) => {
-    setFavoriteBirds((prev) => {
+    if (onToggleFavorite) return onToggleFavorite(birdId)
+    setInternalFav((prev) => {
       const newSet = new Set(prev)
-      if (newSet.has(birdId)) {
-        newSet.delete(birdId)
-      } else {
-        newSet.add(birdId)
-      }
+      if (newSet.has(birdId)) newSet.delete(birdId)
+      else newSet.add(birdId)
       return newSet
     })
   }
@@ -240,7 +253,7 @@ export function BirdGrid() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {birds.map((bird) => (
+  {displayed.map((bird) => (
         <Card
           key={bird.id}
           className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"

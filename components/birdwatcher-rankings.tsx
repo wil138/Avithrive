@@ -36,7 +36,7 @@ const topBirdwatchers = [
 export function BirdwatcherRankings() {
   return (
     <section className="py-16 bg-muted/30">
-      <div className="container">
+      <div className="container-fluid">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-amber-100 text-amber-800 border-amber-200">
             <Trophy className="w-3 h-3 mr-1" />

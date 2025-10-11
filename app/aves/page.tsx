@@ -1,14 +1,119 @@
-import { Suspense } from "react"
+"use client"
+
+import { Suspense, useMemo, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Search, Grid, List } from "lucide-react"
-import { BirdGrid } from "@/components/bird-grid"
+import { BirdGrid, birds as allBirds } from "@/components/bird-grid"
 import { BirdFilters } from "@/components/bird-filters"
 import { BirdStats } from "@/components/bird-stats"
 
 export default function AvesPage() {
+  const [search, setSearch] = useState("")
+  const [habitat, setHabitat] = useState<string | null>(null)
+  const [rarity, setRarity] = useState<string | null>(null)
+  const [sortBy, setSortBy] = useState<string | null>(null)
+  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
+  const [seenBirds, setSeenBirds] = useState<Set<number>>(new Set([1, 3, 4]))
+  const [favoriteBirds, setFavoriteBirds] = useState<Set<number>>(new Set([1, 2]))
+
+  const toggleSeen = (id: number) => {
+    setSeenBirds((prev) => {
+      const s = new Set(prev)
+      if (s.has(id)) s.delete(id)
+      else s.add(id)
+      return s
+    })
+  }
+
+  const toggleFavorite = (id: number) => {
+    setFavoriteBirds((prev) => {
+      const s = new Set(prev)
+      if (s.has(id)) s.delete(id)
+      else s.add(id)
+      return s
+    })
+  }
+
+  const filteredBirds = useMemo(() => {
+    let list = [...allBirds]
+
+    // Apply BirdFilters categories (region, colors, size)
+    Object.entries(activeFilters).forEach(([key, values]) => {
+      if (!values || values.length === 0) return
+      // status handled separately below
+      if (key === "status") return
+      list = list.filter((b) => {
+        const val = (b as any)[key]
+        if (Array.isArray(val)) {
+          return values.every((v) => val.includes(v))
+        }
+        if (typeof val === "string") {
+          return values.some((v) => val.toLowerCase().includes(v.toLowerCase()))
+        }
+        return true
+      })
+    })
+
+    // Handle status filter (Vista, Pendiente, Favorita)
+    const statusFilters = activeFilters["status"]
+    if (statusFilters && statusFilters.length > 0) {
+      list = list.filter((b) => {
+        // if any status filter passes the bird, keep it
+        return statusFilters.some((st) => {
+          if (st === "Vista") return seenBirds.has(b.id)
+          if (st === "Favorita") return favoriteBirds.has(b.id)
+          if (st === "Pendiente") return !seenBirds.has(b.id)
+          return true
+        })
+      })
+    }
+
+    if (habitat && habitat !== "all") {
+      const normalized = habitat.replace(/-/g, " ").toLowerCase()
+      list = list.filter((b) => b.habitat?.toLowerCase().includes(normalized))
+    }
+
+    if (rarity && rarity !== "all") {
+      // map UI values to dataset rarity text
+      const mapRarity = (r: string) => {
+        switch (r) {
+          case "comun":
+            return "Común"
+          case "poco-comun":
+            return "Poco común"
+          case "rara":
+            return "Rara"
+          case "endemica":
+            return "Endémica"
+          default:
+            return r
+        }
+      }
+      const wanted = mapRarity(rarity)
+      list = list.filter((b) => b.rarity === wanted)
+    }
+
+    if (search) {
+      const q = search.toLowerCase()
+      list = list.filter(
+        (b) => b.commonName.toLowerCase().includes(q) || b.scientificName.toLowerCase().includes(q),
+      )
+    }
+
+    if (sortBy) {
+      if (sortBy === "name") list.sort((a, b) => a.commonName.localeCompare(b.commonName))
+      if (sortBy === "name-desc") list.sort((a, b) => b.commonName.localeCompare(a.commonName))
+      if (sortBy === "rarity") list.sort((a, b) => a.rarity.localeCompare(b.rarity))
+    }
+
+    return list
+  }, [search, habitat, rarity, sortBy, activeFilters])
+
+  const count = filteredBirds.length
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       {/* Header Section */}
@@ -41,11 +146,16 @@ export default function AvesPage() {
               <div className="md:col-span-2">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <Input placeholder="Buscar por nombre común o científico..." className="pl-10" />
+                  <Input
+                    value={search}
+                    onChange={(e) => setSearch((e.target as HTMLInputElement).value)}
+                    placeholder="Buscar por nombre común o científico..."
+                    className="pl-10"
+                  />
                 </div>
               </div>
 
-              <Select>
+              <Select onValueChange={(v) => setHabitat(v)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Hábitat" />
                 </SelectTrigger>
@@ -59,7 +169,7 @@ export default function AvesPage() {
                 </SelectContent>
               </Select>
 
-              <Select>
+              <Select onValueChange={(v) => setRarity(v)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Rareza" />
                 </SelectTrigger>
@@ -74,7 +184,7 @@ export default function AvesPage() {
             </div>
 
             <Suspense fallback={<div>Cargando filtros...</div>}>
-              <BirdFilters />
+              <BirdFilters onChange={(f) => setActiveFilters(f)} />
             </Suspense>
           </CardContent>
         </Card>
@@ -82,12 +192,12 @@ export default function AvesPage() {
         {/* Results Header */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">342 especies encontradas</h2>
-            <p className="text-gray-600">Mostrando todas las especies de aves de Nicaragua</p>
+            <h2 className="text-2xl font-bold text-gray-900">{count} especies encontradas</h2>
+            <p className="text-gray-600">Mostrando resultados filtrados</p>
           </div>
 
           <div className="flex items-center gap-2">
-            <Select>
+            <Select onValueChange={(v) => setSortBy(v)}>
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="Ordenar por" />
               </SelectTrigger>
@@ -113,7 +223,13 @@ export default function AvesPage() {
 
         {/* Bird Grid */}
         <Suspense fallback={<div>Cargando catálogo de aves...</div>}>
-          <BirdGrid />
+          <BirdGrid
+            items={filteredBirds}
+            seenBirds={seenBirds}
+            favoriteBirds={favoriteBirds}
+            onToggleSeen={toggleSeen}
+            onToggleFavorite={toggleFavorite}
+          />
         </Suspense>
       </div>
     </div>

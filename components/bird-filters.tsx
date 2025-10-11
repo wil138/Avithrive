@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
@@ -25,7 +25,7 @@ const filterOptions = {
     "RACCS",
     "RACCN",
   ],
-  color: [
+  colors: [
     "Rojo",
     "Azul",
     "Verde",
@@ -43,8 +43,16 @@ const filterOptions = {
   status: ["Vista", "Pendiente", "Favorita"],
 }
 
-export function BirdFilters() {
+export function BirdFilters({
+  onChange,
+}: {
+  onChange?: (activeFilters: Record<string, string[]>) => void
+}) {
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
+
+  useEffect(() => {
+    onChange?.(activeFilters)
+  }, [activeFilters, onChange])
 
   const addFilter = (category: string, value: string) => {
     setActiveFilters((prev) => ({
@@ -93,7 +101,7 @@ export function BirdFilters() {
             <h4 className="font-medium text-sm text-gray-700 capitalize">
               {category === "region"
                 ? "Región"
-                : category === "color"
+                : category === "colors"
                   ? "Color predominante"
                   : category === "size"
                     ? "Tamaño"

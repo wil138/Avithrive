@@ -54,7 +54,7 @@ const excursions = [
 export function ExcursionsSection() {
   return (
     <section id="excursiones" className="py-16">
-      <div className="container">
+      <div className="container-fluid px-8">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-orange-100 text-orange-800 border-orange-200">
             <MapPin className="w-3 h-3 mr-1" />
