@@ -6,10 +6,37 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Play, BookOpen, Gamepad2, Volume2, Eye, Brain, Users, Star, Trophy, Target } from "lucide-react"
+import {
+  Accessibility,
+  Award,
+  BookOpen,
+  Brain,
+  CheckCircle,
+  Clock,
+  Download,
+  Eye,
+  Gamepad2,
+  Globe,
+  GraduationCap,
+  Hand,
+  Headphones,
+  Lightbulb,
+  Link as LinkIcon,
+  Lock,
+  Palette,
+  Play,
+  Star,
+  Target,
+  TextCursorInput,
+  Trophy,
+  User,
+  Users,
+  Video,
+  Volume2,
+} from "lucide-react"
+import Link from "next/link"
 
 export default function EducacionPage() {
-  const [selectedGame, setSelectedGame] = useState(null)
   const [userProgress, setUserProgress] = useState({
     gamesCompleted: 12,
     totalGames: 20,
@@ -54,6 +81,17 @@ export default function EducacionPage() {
     },
     {
       id: 4,
+      title: "Adivina el Ave",
+      description: "Responde preguntas sobre características y datos curiosos de aves nicaragüenses",
+      difficulty: "Fácil",
+      type: "Quiz",
+      icon: Lightbulb,
+      points: 60,
+      completed: false,
+      accessibility: ["Textual", "Cognitivo"],
+    },
+    {
+      id: 5,
       title: "Aventura Grupal",
       description: "Juego colaborativo para identificar aves en equipo",
       difficulty: "Difícil",
@@ -67,48 +105,82 @@ export default function EducacionPage() {
 
   const learningModules = [
     {
+      id: 1,
       title: "Aves Endémicas de Nicaragua",
-      description: "Conoce las especies únicas de nuestro país",
+      description: "Conoce las especies únicas de nuestro país, su hábitat y estado de conservación.",
       duration: "15 min",
       level: "Principiante",
       completed: true,
+      image: "/guardabarranco-bird-nicaragua.jpg",
     },
     {
+      id: 2,
       title: "Conservación y Protección",
-      description: "Aprende sobre la importancia de proteger las aves",
+      description: "Aprende sobre la importancia de proteger las aves y sus hábitats, y cómo puedes contribuir a su conservación.",
       duration: "20 min",
       level: "Intermedio",
       completed: true,
+      image: "/great-green-macaw-parrot-nicaragua-endangered.jpg",
     },
     {
+      id: 3,
       title: "Técnicas de Observación",
-      description: "Mejora tus habilidades de avistamiento",
+      description: "Mejora tus habilidades de avistamiento con consejos prácticos y técnicas avanzadas para identificar aves en el campo.",
       duration: "25 min",
       level: "Avanzado",
       completed: false,
+      image: "/placeholder.svg?key=observacion",
+    },
+    {
+      id: 4,
+      title: "Identificación por Plumaje",
+      description: "Guía detallada para reconocer aves por sus patrones de plumaje, tamaño y forma.",
+      duration: "18 min",
+      level: "Principiante",
+      completed: false,
+      image: "/placeholder.svg?key=plumaje",
+    },
+    {
+      id: 5,
+      title: "Ecología Aviar",
+      description: "Estudio de los ecosistemas y el comportamiento de las aves.",
+      duration: "30 min",
+      level: "Intermedio",
+      completed: false,
+      image: "/placeholder.svg?key=ecologia",
     },
   ]
 
   const accessibilityFeatures = [
     {
-      icon: Volume2,
+      icon: Headphones,
       title: "Audio Descriptivo",
-      description: "Descripciones detalladas de imágenes y contenido visual",
+      description: "Descripciones detalladas de imágenes y contenido visual para usuarios con discapacidad visual.",
     },
     {
-      icon: Eye,
-      title: "Alto Contraste",
-      description: "Colores y contrastes optimizados para mejor visibilidad",
+      icon: Palette,
+      title: "Alto Contraste y Temas",
+      description: "Colores y contrastes optimizados, y opciones de temas para mejor visibilidad y preferencias de usuario.",
     },
     {
-      icon: Brain,
+      icon: Clock,
       title: "Ritmo Adaptable",
-      description: "Velocidad de juego ajustable según necesidades cognitivas",
+      description: "Velocidad de juego y lectura ajustable según necesidades cognitivas y de aprendizaje.",
+    },
+    {
+      icon: TextCursorInput,
+      title: "Tamaño de Texto Ajustable",
+      description: "Permite a los usuarios aumentar o disminuir el tamaño del texto para una lectura más cómoda.",
+    },
+    {
+      icon: Hand,
+      title: "Navegación por Teclado",
+      description: "Funcionalidad completa de la interfaz utilizando solo el teclado, sin necesidad de ratón.",
     },
     {
       icon: Target,
       title: "Instrucciones Claras",
-      description: "Explicaciones paso a paso con lenguaje simple",
+      description: "Explicaciones paso a paso con lenguaje simple y ayudas visuales para facilitar la comprensión.",
     },
   ]
 
@@ -144,7 +216,7 @@ export default function EducacionPage() {
                   <div className="text-sm text-emerald-200">Insignias</div>
                 </div>
                 <div className="col-span-2 md:col-span-1">
-                  <Progress value={60} className="mb-2" />
+                  <Progress value={60} className="mb-2" aria-label="Progreso al siguiente nivel" />
                   <div className="text-sm text-emerald-200">Progreso al Nivel 4</div>
                 </div>
               </div>
@@ -155,7 +227,7 @@ export default function EducacionPage() {
 
       <div className="container mx-auto px-4 py-12">
         <Tabs defaultValue="games" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
+          <TabsList className="grid w-full grid-cols-3 mb-8" aria-label="Navegación principal de Educación">
             <TabsTrigger value="games" className="flex items-center gap-2">
               <Gamepad2 className="h-4 w-4" />
               Juegos Interactivos
@@ -165,7 +237,7 @@ export default function EducacionPage() {
               Módulos Educativos
             </TabsTrigger>
             <TabsTrigger value="accessibility" className="flex items-center gap-2">
-              <Brain className="h-4 w-4" />
+              <Accessibility className="h-4 w-4" />
               Accesibilidad
             </TabsTrigger>
           </TabsList>
@@ -190,7 +262,7 @@ export default function EducacionPage() {
                         <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
                             <div className="p-2 bg-emerald-100 rounded-lg">
-                              <IconComponent className="h-6 w-6 text-emerald-600" />
+                              <IconComponent className="h-6 w-6 text-emerald-600" aria-hidden="true" />
                             </div>
                             <div>
                               <CardTitle className="text-lg">{game.title}</CardTitle>
@@ -211,8 +283,8 @@ export default function EducacionPage() {
                             </div>
                           </div>
                           {game.completed && (
-                            <div className="p-1 bg-green-100 rounded-full">
-                              <Trophy className="h-4 w-4 text-green-600" />
+                            <div className="p-1 bg-green-100 rounded-full" aria-label="Juego completado">
+                              <Trophy className="h-4 w-4 text-green-600" aria-hidden="true" />
                             </div>
                           )}
                         </div>
@@ -221,7 +293,7 @@ export default function EducacionPage() {
                         <CardDescription className="mb-4 text-pretty">{game.description}</CardDescription>
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-1">
-                            <Star className="h-4 w-4 text-yellow-500" />
+                            <Star className="h-4 w-4 text-yellow-500" aria-hidden="true" />
                             <span className="text-sm font-medium">{game.points} puntos</span>
                           </div>
                           <div className="flex gap-1">
@@ -232,10 +304,12 @@ export default function EducacionPage() {
                             ))}
                           </div>
                         </div>
-                        <Button className="w-full" variant={game.completed ? "outline" : "default"}>
-                          <Play className="h-4 w-4 mr-2" />
-                          {game.completed ? "Jugar de Nuevo" : "Comenzar Juego"}
-                        </Button>
+                        <Link href={`/educacion/juegos/${game.id}`} aria-label={`Comenzar juego ${game.title}`}>
+                          <Button className="w-full" variant={game.completed ? "outline" : "default"}>
+                            <Play className="h-4 w-4 mr-2" aria-hidden="true" />
+                            {game.completed ? "Jugar de Nuevo" : "Comenzar Juego"}
+                          </Button>
+                        </Link>
                       </CardContent>
                     </Card>
                   )
@@ -254,31 +328,58 @@ export default function EducacionPage() {
               </p>
             </div>
 
-            <div className="space-y-6">
-              {learningModules.map((module, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
+            <div className="grid md:grid-cols-2 gap-6">
+              {learningModules.map((module) => (
+                <Card key={module.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <img
+                    src={module.image || "/placeholder.svg"}
+                    alt={`Imagen del módulo ${module.title}`}
+                    className="w-full h-32 object-cover"
+                  />
                   <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-xl font-semibold text-emerald-800">{module.title}</h3>
-                          {module.completed && <Badge className="bg-green-100 text-green-800">Completado</Badge>}
-                        </div>
-                        <p className="text-gray-600 mb-3 text-pretty">{module.description}</p>
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
-                          <span>⏱️ {module.duration}</span>
-                          <span>📊 {module.level}</span>
-                        </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-xl font-semibold text-emerald-800">{module.title}</h3>
+                      {module.completed && <Badge className="bg-green-100 text-green-800">Completado</Badge>}
+                    </div>
+                    <p className="text-gray-600 mb-3 text-pretty">{module.description}</p>
+                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-gray-500" />
+                        <span>{module.duration}</span>
                       </div>
-                      <div className="ml-6">
-                        <Button variant={module.completed ? "outline" : "default"}>
-                          {module.completed ? "Revisar" : "Comenzar"}
-                        </Button>
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="h-4 w-4 text-gray-500" />
+                        <span>{module.level}</span>
                       </div>
                     </div>
+                    <Link href={`/educacion/modulos/${module.id}`} aria-label={`Acceder al módulo ${module.title}`}>
+                      <Button className="w-full" variant={module.completed ? "outline" : "default"}>
+                        {module.completed ? "Revisar Módulo" : "Comenzar Módulo"}
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               ))}
+            </div>
+
+            {/* Link to CursosPage */}
+            <div className="mt-12 text-center">
+              <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6">
+                <CardHeader>
+                  <GraduationCap className="h-12 w-12 text-blue-600 mx-auto mb-4" aria-hidden="true" />
+                  <CardTitle className="text-2xl text-emerald-800 mb-2">Explora Nuestros Cursos y Certificaciones</CardTitle>
+                  <CardDescription className="text-gray-700">
+                    Accede a una amplia gama de cursos especializados y obtén certificaciones oficiales para avanzar en tu pasión por el aviturismo.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/educacion/cursos" aria-label="Ver todos los cursos y certificaciones">
+                    <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                      Ver Cursos y Certificaciones
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
 
@@ -301,7 +402,7 @@ export default function EducacionPage() {
                       <CardContent className="p-6">
                         <div className="flex items-start gap-4">
                           <div className="p-3 bg-blue-100 rounded-lg">
-                            <IconComponent className="h-6 w-6 text-blue-600" />
+                            <IconComponent className="h-6 w-6 text-blue-600" aria-hidden="true" />
                           </div>
                           <div>
                             <h3 className="text-lg font-semibold text-emerald-800 mb-2">{feature.title}</h3>
@@ -325,16 +426,16 @@ export default function EducacionPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">Velocidad de Juego</span>
-                      <select className="px-3 py-1 border rounded-md">
+                      <label htmlFor="game-speed" className="font-medium">Velocidad de Juego</label>
+                      <select id="game-speed" className="px-3 py-1 border rounded-md" aria-label="Seleccionar velocidad de juego">
                         <option>Lenta</option>
                         <option>Normal</option>
                         <option>Rápida</option>
                       </select>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">Tamaño de Texto</span>
-                      <select className="px-3 py-1 border rounded-md">
+                      <label htmlFor="text-size" className="font-medium">Tamaño de Texto</label>
+                      <select id="text-size" className="px-3 py-1 border rounded-md" aria-label="Seleccionar tamaño de texto">
                         <option>Pequeño</option>
                         <option>Normal</option>
                         <option>Grande</option>
@@ -343,16 +444,16 @@ export default function EducacionPage() {
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">Contraste Alto</span>
-                      <input type="checkbox" className="w-4 h-4" />
+                      <label htmlFor="high-contrast" className="font-medium">Contraste Alto</label>
+                      <input type="checkbox" id="high-contrast" className="w-4 h-4" aria-label="Activar contraste alto" />
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">Audio Descriptivo</span>
-                      <input type="checkbox" className="w-4 h-4" />
+                      <label htmlFor="audio-description" className="font-medium">Audio Descriptivo</label>
+                      <input type="checkbox" id="audio-description" className="w-4 h-4" aria-label="Activar audio descriptivo" />
                     </div>
                   </div>
                 </div>
-                <Button className="w-full mt-6">Guardar Configuración</Button>
+                <Button className="w-full mt-6" aria-label="Guardar configuración de accesibilidad">Guardar Configuración</Button>
               </CardContent>
             </Card>
           </TabsContent>

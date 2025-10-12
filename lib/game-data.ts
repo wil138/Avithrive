@@ -1,0 +1,228 @@
+import { GameData } from "@/types/game";
+
+export const gameData: GameData = {
+  1: {
+    id: 1,
+    title: "Identifica el Canto",
+    type: "audio",
+    description: "Escucha y reconoce los cantos de aves nicaragüenses",
+    questions: [
+      {
+        id: 1,
+        audio: "/placeholder.svg?key=audio1",
+        options: ["Guardabarranco", "Quetzal", "Tucán", "Colibrí"],
+        correct: 0,
+        explanation: "El Guardabarranco tiene un canto distintivo con notas melodiosas y repetitivas, a menudo descrito como 'toh-toh-toh'.",
+        birdInfo: {
+          name: "Guardabarranco",
+          scientificName: "Eumomota superciliosa",
+          habitat: "Bosque seco tropical y áreas semiabiertas",
+          image: "/guardabarranco-bird-nicaragua.jpg",
+        },
+      },
+      {
+        id: 2,
+        audio: "/placeholder.svg?key=audio2",
+        options: ["Lapa Verde", "Pájaro Campana", "Tucán Pico Iris", "Momoto"],
+        correct: 1,
+        explanation: "El Pájaro Campana macho es famoso por su canto fuerte y metálico que resuena en el bosque nuboso.",
+        birdInfo: {
+          name: "Pájaro Campana",
+          scientificName: "Procnias tricarunculatus",
+          habitat: "Bosque nuboso de tierras altas",
+          image: "/three-wattled-bellbird-white-brown.jpg",
+        },
+      },
+      {
+        id: 3,
+        audio: "/placeholder.svg?key=audio3",
+        options: ["Colibrí Garganta Rubí", "Reinita", "Tangara", "Vireo"],
+        correct: 0,
+        explanation: "Los colibríes producen un zumbido característico con sus alas que baten muy rápidamente, y sus cantos son gorjeos agudos y rápidos.",
+        birdInfo: {
+          name: "Colibrí Garganta Rubí",
+          scientificName: "Archilochus colubris",
+          habitat: "Jardines, bosques y áreas floridas",
+          image: "/ruby-throated-hummingbird-red-green.jpg",
+        },
+      },
+      {
+        id: 4,
+        audio: "/placeholder.svg?key=audio4",
+        options: ["Zanate", "Chocoyo", "Cenzontle", "Perico"],
+        correct: 0,
+        explanation: "El Zanate es conocido por su canto ruidoso y variado, que incluye chirridos y silbidos.",
+        birdInfo: {
+          name: "Zanate",
+          scientificName: "Quiscalus mexicanus",
+          habitat: "Áreas urbanas, campos abiertos y zonas agrícolas",
+          image: "/placeholder.svg?key=zanate",
+        },
+      },
+      {
+        id: 5,
+        audio: "/placeholder.svg?key=audio5",
+        options: ["Búho", "Lechuza", "Halcon", "Águila"],
+        correct: 0,
+        explanation: "Los búhos tienen un ulular característico, a menudo usado para marcar territorio o atraer pareja.",
+        birdInfo: {
+          name: "Búho",
+          scientificName: "Orden Strigiformes",
+          habitat: "Bosques, zonas rurales y urbanas",
+          image: "/placeholder.svg?key=buho",
+        },
+      },
+    ],
+  },
+  2: {
+    id: 2,
+    title: "Memoria de Colores",
+    type: "visual",
+    description: "Memoriza los patrones de colores de diferentes especies",
+    questions: [
+      {
+        id: 1,
+        image: "/quetzal-bird-green-red-guatemala-nicaragua.jpg",
+        colors: ["Verde", "Rojo", "Blanco", "Dorado", "Negro"],
+        correctColors: ["Verde", "Rojo", "Blanco"],
+        explanation: "El Quetzal Resplandeciente es famoso por su plumaje verde esmeralda, pecho rojo brillante y plumas blancas en la cola.",
+        birdInfo: {
+          name: "Quetzal Resplandeciente",
+          scientificName: "Pharomachrus mocinno",
+          habitat: "Bosque nuboso",
+          image: "/quetzal-bird-green-red-guatemala-nicaragua.jpg",
+        },
+      },
+      {
+        id: 2,
+        image: "/toucan-colorful-beak-tropical-bird.jpg",
+        colors: ["Negro", "Amarillo", "Azul", "Verde", "Rojo", "Naranja"],
+        correctColors: ["Negro", "Amarillo", "Azul", "Verde", "Rojo", "Naranja"],
+        explanation: "El Tucán Pico Iris tiene uno de los picos más coloridos del reino animal, con una mezcla vibrante de negro, amarillo, azul, verde, rojo y naranja.",
+        birdInfo: {
+          name: "Tucán Pico Iris",
+          scientificName: "Ramphastos sulfuratus",
+          habitat: "Bosque húmedo tropical",
+          image: "/toucan-colorful-beak-tropical-bird.jpg",
+        },
+      },
+      {
+        id: 3,
+        image: "/great-green-macaw-parrot-nicaragua-endangered.jpg",
+        colors: ["Verde", "Azul", "Rojo", "Amarillo", "Gris"],
+        correctColors: ["Verde", "Azul", "Rojo"],
+        explanation: "La Lapa Verde se caracteriza por su plumaje predominantemente verde, con toques de azul en las alas y rojo en la frente.",
+        birdInfo: {
+          name: "Lapa Verde",
+          scientificName: "Ara ambiguus",
+          habitat: "Bosques húmedos de tierras bajas",
+          image: "/great-green-macaw-parrot-nicaragua-endangered.jpg",
+        },
+      },
+      {
+        id: 4,
+        image: "/placeholder.svg?key=motmot",
+        colors: ["Verde", "Azul", "Negro", "Naranja", "Marrón"],
+        correctColors: ["Verde", "Azul", "Negro", "Naranja"],
+        explanation: "El Momoto Cejiazul tiene un plumaje verde brillante, una máscara negra con cejas azules y un pecho naranja.",
+        birdInfo: {
+          name: "Momoto Cejiazul",
+          scientificName: "Momotus momota",
+          habitat: "Bosques tropicales y subtropicales",
+          image: "/placeholder.svg?key=motmot",
+        },
+      },
+    ],
+  },
+  3: {
+    id: 3,
+    title: "Rompecabezas de Hábitats",
+    type: "logic",
+    description: "Conecta cada ave con su hábitat natural",
+    questions: [
+      {
+        id: 1,
+        birds: [
+          { name: "Guardabarranco", image: "/guardabarranco-bird-nicaragua.jpg" },
+          { name: "Quetzal", image: "/quetzal-bird-green-red-guatemala-nicaragua.jpg" },
+          { name: "Lapa Verde", image: "/great-green-macaw-parrot-nicaragua-endangered.jpg" },
+        ],
+        habitats: [
+          { name: "Bosque seco", description: "Áreas con poca precipitación y vegetación caducifolia" },
+          { name: "Bosque nuboso", description: "Montañas con neblina constante y alta humedad" },
+          { name: "Bosque húmedo", description: "Selva tropical lluviosa con densa vegetación" },
+        ],
+        correctMatches: [
+          { bird: "Guardabarranco", habitat: "Bosque seco" },
+          { bird: "Quetzal", habitat: "Bosque nuboso" },
+          { bird: "Lapa Verde", habitat: "Bosque húmedo" },
+        ],
+      },
+      {
+        id: 2,
+        birds: [
+          { name: "Colibrí", image: "/ruby-throated-hummingbird-red-green.jpg" },
+          { name: "Garza", image: "/placeholder.svg?key=garza" },
+          { name: "Zopilote", image: "/placeholder.svg?key=zopilote" },
+        ],
+        habitats: [
+          { name: "Jardines y Flores", description: "Áreas con abundancia de néctar y vegetación floral" },
+          { name: "Humedales y Ríos", description: "Cuerpos de agua dulce y salobre, pantanos" },
+          { name: "Cielos Abiertos", description: "Grandes extensiones de cielo para planear y buscar carroña" },
+        ],
+        correctMatches: [
+          { bird: "Colibrí", habitat: "Jardines y Flores" },
+          { bird: "Garza", habitat: "Humedales y Ríos" },
+          { bird: "Zopilote", habitat: "Cielos Abiertos" },
+        ],
+      },
+    ],
+  },
+  4: {
+    id: 4,
+    title: "Adivina el Ave",
+    type: "text_quiz",
+    description: "Responde preguntas sobre características y datos curiosos de aves nicaragüenses",
+    questions: [
+      {
+        id: 1,
+        question: "¿Qué ave nacional de Nicaragua es conocida por su plumaje colorido y su cola de raqueta?",
+        options: ["Tucán Pico Iris", "Guardabarranco", "Quetzal Resplandeciente", "Lapa Roja"],
+        correct: 1,
+        explanation: "El Guardabarranco es el ave nacional de Nicaragua, famoso por su belleza y su cola distintiva.",
+        birdInfo: {
+          name: "Guardabarranco",
+          scientificName: "Eumomota superciliosa",
+          habitat: "Bosque seco tropical y áreas semiabiertas",
+          image: "/guardabarranco-bird-nicaragua.jpg",
+        },
+      },
+      {
+        id: 2,
+        question: "¿Cuál es el ave más grande de Nicaragua, conocida por su impresionante envergadura y su dieta de monos y perezosos?",
+        options: ["Águila Pescadora", "Harpía", "Búho Real", "Gavilán"],
+        correct: 1,
+        explanation: "El Águila Harpía es una de las aves rapaces más grandes y poderosas del mundo, habitando las selvas tropicales de Centro y Sudamérica.",
+        birdInfo: {
+          name: "Águila Harpía",
+          scientificName: "Harpia harpyja",
+          habitat: "Selvas tropicales densas",
+          image: "/placeholder.svg?key=harpia",
+        },
+      },
+      {
+        id: 3,
+        question: "¿Qué ave migratoria visita Nicaragua durante el invierno boreal y es conocida por su canto melodioso?",
+        options: ["Zorzal Pechiamarillo", "Reinita Migratoria", "Tangara Escarlata", "Colibrí Rufous"],
+        correct: 0,
+        explanation: "El Zorzal Pechiamarillo es un visitante común en Nicaragua durante el invierno, apreciado por su hermoso canto.",
+        birdInfo: {
+          name: "Zorzal Pechiamarillo",
+          scientificName: "Turdus grayi",
+          habitat: "Bosques, jardines y áreas cultivadas",
+          image: "/placeholder.svg?key=zorzal",
+        },
+      },
+    ],
+  },
+};
