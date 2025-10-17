@@ -19,12 +19,12 @@ const learningModulesData = {
     image: "/guardabarranco-bird-nicaragua.jpg",
     content: [
       { type: "text", title: "Introducción", data: "Nicaragua es hogar de una impresionante diversidad de aves, incluyendo varias especies endémicas que no se encuentran en ningún otro lugar del mundo. Este módulo te guiará a través de las más destacadas." },
-      { type: "video", title: "Video: El Guardabarranco", data: "https://www.youtube.com/embed/dQw4w9WgXcQ" }, // Placeholder video
+      { type: "video", title: "Video: El Guardabarranco", data: "https://www.youtube.com/embed/4R8OIvvxlN0" }, // Placeholder video
       { type: "text", title: "Especies Clave", data: "Exploraremos el Guardabarranco, el Momoto Cejiazul y otras aves emblemáticas, detallando sus características y la importancia de su conservación." },
     ],
     resources: [
-      { name: "Guía de Aves Endémicas (PDF)", url: "/resources/endemic_birds.pdf", type: "pdf" },
-      { name: "Artículo: Conservación del Momoto", url: "https://example.com/momoto-conservation", type: "link" },
+      { name: "Guía de Aves Endémicas (PDF)", url: "https://lynxeds.info/sites/default/files/pdfs/Lynx%20Edicions%20-%20Checklist%20of%20the%20One-country%20%20Endemic%20Birds%20%20of%20the%20World.pdf", type: "pdf" },
+      { name: "PLAN DE MANEJO DE LA RESERVA NATURAL COMPLEJO VOLCÁNICO MOMOTOMBO", url: "https://www.renida.net.ni/renida/marena/RENP01M665s.pdf", type: "link" },
     ],
     instructor: {
       name: "Dr. Elena Ríos",
@@ -43,11 +43,11 @@ const learningModulesData = {
     content: [
       { type: "text", title: "Amenazas Actuales", data: "La deforestación, el cambio climático y la caza ilegal son algunas de las principales amenazas para las aves en Nicaragua." },
       { type: "text", title: "Estrategias de Conservación", data: "Descubre los esfuerzos de organizaciones locales e internacionales para proteger a las especies en peligro y restaurar sus ecosistemas." },
-      { type: "video", title: "Documental: Lapas Verdes", data: "https://www.youtube.com/embed/dQw4w9WgXcQ" }, // Placeholder video
+      { type: "video", title: "Guacamaya verde", data: "https://www.youtube.com/embed/Pif8RmbIUj8" }, // Placeholder video
     ],
     resources: [
-      { name: "Informe de Conservación (PDF)", url: "/resources/conservation_report.pdf", type: "pdf" },
-      { name: "Organizaciones de Conservación", url: "https://example.com/conservation-orgs", type: "link" },
+      { name: "Informe de Conservación (PDF)", url: "https://corpoguajira.gov.co/wp/wp-content/uploads/2017/07/INFORME-FINAL-GUACAMAYA.pdf", type: "pdf" },
+      { name: "Organizaciones de Conservación", url: "http://www.bio-nica.info/ALAS/HistoriaALAS.htm", type: "link" },
     ],
     instructor: {
       name: "Biol. Carlos Mendoza",
@@ -66,11 +66,11 @@ const learningModulesData = {
     content: [
       { type: "text", title: "Equipo Esencial", data: "Binoculares, telescopios, guías de campo y ropa adecuada son fundamentales para una observación exitosa." },
       { type: "text", title: "Estrategias de Avistamiento", data: "Aprende a acercarte a las aves sin molestarlas, a usar el camuflaje natural y a interpretar sus comportamientos." },
-      { type: "video", title: "Tutorial: Uso de Binoculares", data: "https://www.youtube.com/embed/dQw4w9WgXcQ" }, // Placeholder video
+      { type: "video", title: "Tutorial: Uso de Binoculares", data: "https://www.youtube.com/embed/_vi_usL5XQo" }, // Placeholder video
     ],
     resources: [
-      { name: "Checklist de Aves de Nicaragua (PDF)", url: "/resources/checklist.pdf", type: "pdf" },
-      { name: "Consejos para Fotografía de Aves", url: "https://example.com/bird-photography-tips", type: "link" },
+      { name: "Checklist de Aves de Nicaragua (PDF)", url: "https://mlr.com.ni/wp-content/uploads/2021/06/Catalogo-de-Aves-MLR.pdf", type: "pdf" },
+      { name: "Consejos para Fotografía de Aves", url: "https://digital-photography-school.com/10-incredible-bird-photography-tips-beginners/", type: "link" },
     ],
     instructor: {
       name: "Roberto Silva",
@@ -91,7 +91,7 @@ const learningModulesData = {
       { type: "text", title: "Patrones y Colores", data: "Aprende a identificar patrones clave, como barras alares, manchas oculares y colores distintivos que te ayudarán a diferenciar aves similares." },
     ],
     resources: [
-      { name: "Atlas de Plumajes (PDF)", url: "/resources/plumage_atlas.pdf", type: "pdf" },
+      { name: "Atlas de Plumajes (PDF)", url: "https://tagusringinggroup.weebly.com/uploads/1/9/5/1/19518165/atlas_aves_aragon_2.pdf", type: "pdf" },
     ],
     instructor: {
       name: "Juan Pérez",
@@ -112,7 +112,7 @@ const learningModulesData = {
       { type: "text", title: "Migración y Reproducción", data: "Aprende sobre los fascinantes viajes migratorios de las aves y sus complejos rituales de cortejo y reproducción." },
     ],
     resources: [
-      { name: "Estudio de Migración (PDF)", url: "/resources/migration_study.pdf", type: "pdf" },
+      { name: "Las aves migratorias (PDF)", url: "https://www.biodiversidad.gob.mx/media/1/ciencia-ciudadana/documentos/naturalia_aves.pdf", type: "pdf" },
     ],
     instructor: {
       name: "Dra. Laura Gómez",

@@ -76,7 +76,7 @@ const habitats = ["Todos los hábitats", "Bosque nuboso", "Manglar", "Humedal", 
 
 export default function ExcursionesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-white">
+    <div className="min-h-screen">
       {/* Header Section */}
       <div className="bg-emerald-600 text-white py-16">
         <div className="container mx-auto px-4">
@@ -163,7 +163,7 @@ export default function ExcursionesPage() {
           {/* Excursions List */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900">{excursions.length} excursiones disponibles</h2>
+              <h2 className="text-2xl font-bold ">{excursions.length} excursiones disponibles</h2>
               <Select>
                 <SelectTrigger className="w-48">
                   <SelectValue placeholder="Ordenar por" />

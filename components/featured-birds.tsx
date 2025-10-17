@@ -1,3 +1,4 @@
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -70,10 +71,10 @@ export function FeaturedBirds() {
                   </Badge>
                 </div>
                 <div className="absolute top-3 right-3 flex space-x-2">
-                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white">
+                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0 hover:bg-white">
                     <Heart className="w-3 h-3" />
                   </Button>
-                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white">
+                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0 hover:bg-white">
                     <Share2 className="w-3 h-3" />
                   </Button>
                 </div>
@@ -107,8 +108,15 @@ export function FeaturedBirds() {
         </div>
 
         <div className="text-center mt-8">
-          <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700">
-            Explorar Todas las Especies
+          <Button
+            onClick={() => {
+              // go to aves
+              window.location.href = "/aves"
+            }}
+            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"
+            size="lg"
+          >
+            Explorar Todas las Aves
           </Button>
         </div>
       </div>

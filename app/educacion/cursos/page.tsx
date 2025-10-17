@@ -525,7 +525,7 @@ export default function CursosPage() {
                           </Button>
                         </div>
                       </div>
-                    ) : cert.progress > 0 ? (
+                    ) : (cert.progress ?? 0) > 0 ? (
                       <div>
                         <div className="flex justify-between text-sm mb-2">
                           <span>Progreso</span>

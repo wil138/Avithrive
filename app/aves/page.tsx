@@ -1,16 +1,34 @@
 "use client"
 
-import { Suspense, useMemo, useState } from "react"
+import { Suspense, useMemo, useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Search, Grid, List } from "lucide-react"
-import { BirdGrid, birds as allBirds } from "@/components/bird-grid"
+import { BirdGrid } from "@/components/bird-grid"
 import { BirdFilters } from "@/components/bird-filters"
 import { BirdStats } from "@/components/bird-stats"
 
 export default function AvesPage() {
+  const [allBirds, setAllBirds] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let mounted = true
+    fetch('/birds.json')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!mounted) return
+        setAllBirds(data || [])
+      })
+      .catch(() => setAllBirds([]))
+      .finally(() => mounted && setLoading(false))
+
+    return () => {
+      mounted = false
+    }
+  }, [])
   const [search, setSearch] = useState("")
   const [habitat, setHabitat] = useState<string | null>(null)
   const [rarity, setRarity] = useState<string | null>(null)
@@ -110,12 +128,12 @@ export default function AvesPage() {
     }
 
     return list
-  }, [search, habitat, rarity, sortBy, activeFilters])
+  }, [search, habitat, rarity, sortBy, activeFilters, allBirds, seenBirds, favoriteBirds])
 
   const count = filteredBirds.length
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-scree">
       {/* Header Section */}
       <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-16">
         <div className="container mx-auto px-4">
@@ -192,7 +210,7 @@ export default function AvesPage() {
         {/* Results Header */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">{count} especies encontradas</h2>
+            <h2 className="text-2xl font-bold">{count} especies encontradas</h2>
             <p className="text-gray-600">Mostrando resultados filtrados</p>
           </div>
 

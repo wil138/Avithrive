@@ -30,11 +30,22 @@ export default function LoginPage() {
       return
     }
 
-    const success = await login(email, password)
-    if (success) {
-      router.push("/")
-    } else {
-      setError("Credenciales inválidas. Intenta de nuevo.")
+    try {
+      const result = await login(email, password)
+      // Debug: log full result so you can inspect it in the browser console
+      // and show the raw message in the UI to help diagnose "Load failed".
+      console.log("login result:", result)
+
+      if (result.success) {
+        router.push("/")
+      } else {
+        // Show backend error or the whole result (for debugging)
+        setError(result.error ?? JSON.stringify(result) ?? "Credenciales inválidas. Intenta de nuevo.")
+      }
+    } catch (err) {
+      // Unexpected exceptions
+      console.error("login exception:", err)
+      setError((err as Error)?.message ?? "Load failed")
     }
   }
 
@@ -42,8 +53,8 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4">
-            <Bird className="h-6 w-6 text-white" />
+          <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4">
+          <img src="/icono_negativo.svg" alt="" className="h-10 w-auto" />
           </div>
           <CardTitle className="text-2xl font-bold">Iniciar Sesión</CardTitle>
           <CardDescription>Accede a tu cuenta de Avithrive para continuar explorando</CardDescription>
@@ -92,7 +103,7 @@ export default function LoginPage() {
             </div>
           </CardContent>
 
-          <CardFooter className="flex flex-col space-y-4">
+          <CardFooter className="flex flex-col space-y-4 pt-8">
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"

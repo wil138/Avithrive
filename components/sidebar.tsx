@@ -69,11 +69,15 @@ export function Sidebar() {
           {/* Header */}
           <div className="p-6 border-b border-sidebar-border">
             <Link href="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">A</span>
+              <div>
+                {theme == "dark" ? (
+                  <img src="/logo_negativo.svg" alt="Logo negativo" className="h-8 w-auto ps-8" />
+                ) : (
+                  <img src="/logo_full.svg" alt="Logo completo" className="h-8 w-auto ps-8" />
+                )}
               </div>
-              <span className="font-bold text-xl text-sidebar-foreground">Avitravel</span>
             </Link>
+           
           </div>
 
           {user ? (
@@ -136,7 +140,7 @@ export function Sidebar() {
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                    "flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:scale-105 duration-500",
                     isActive
                       ? "bg-sidebar-accent text-sidebar-accent-foreground"
                       : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -188,18 +192,20 @@ export function Sidebar() {
             </Button>
 
             {user && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  logout()
-                  setIsOpen(false)
-                }}
-                className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-              >
-                <LogOut className="h-4 w-4 mr-3" />
-                Cerrar Sesión
-              </Button>
+              <Link href="/login" onClick={() => setIsOpen(false)}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    logout()
+                    setIsOpen(false)
+                  }}
+                  className="w-full justify-start text-red-600 hover:bg-red-600/10"
+                >
+                  <LogOut className="h-4 w-4 mr-3" />
+                  Cerrar Sesión
+                </Button>
+              </Link>
             )}
           </div>
         </div>

@@ -107,22 +107,30 @@ export function BirdFilters({
                     ? "Tamaño"
                     : "Estado"}
             </h4>
-            <div className="flex flex-wrap gap-1">
-              {options.map((option) => {
-                const isActive = activeFilters[category]?.includes(option)
-                return (
-                  <Button
-                    key={option}
-                    variant={isActive ? "default" : "outline"}
-                    size="sm"
-                    className="text-xs h-7"
-                    onClick={() => (isActive ? removeFilter(category, option) : addFilter(category, option))}
-                  >
-                    {option}
-                  </Button>
-                )
-              })}
-            </div>
+
+            {/* Dropdown (multiple) for selecting filter options */}
+            <select
+              multiple
+              value={activeFilters[category] ?? []}
+              onChange={(e) => {
+                const selected = Array.from(e.target.selectedOptions).map((opt) => opt.value)
+                setActiveFilters((prev) => {
+                  const next = { ...prev, [category]: selected }
+                  // Remove empty arrays to keep state clean
+                  Object.keys(next).forEach((k) => {
+                    if (!next[k] || next[k].length === 0) delete next[k]
+                  })
+                  return next
+                })
+              }}
+              className="w-full h-24 border rounded p-2 text-sm "
+            >
+              {options.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
         ))}
       </div>
