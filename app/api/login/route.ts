@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     const encodedEmail = encodeURIComponent(String(email))
     const encodedPassword = encodeURIComponent(String(password))
-    const backendUrl = `https://fm5sp9ml-8005.use.devtunnels.ms/${encodedEmail}/${encodedPassword}`
+    const backendUrl = `https://fm5sp9ml-8005.use.devtunnels.ms/login/${encodedEmail}/${encodedPassword}`
 
     const res = await fetch(backendUrl, { method: 'GET', headers: { accept: 'application/json' } })
     const text = await res.text().catch(() => '')

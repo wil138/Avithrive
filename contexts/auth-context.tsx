@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Construct endpoint with URL-encoded email and password
       const encodedEmail = encodeURIComponent(email)
       const encodedPassword = encodeURIComponent(password)
-      const url = `https://fm5sp9ml-8005.use.devtunnels.ms/${encodedEmail}/${encodedPassword}`
+      const url = `https://fm5sp9ml-8005.use.devtunnels.ms/login/${encodedEmail}/${encodedPassword}`
 
       // Call the local Next.js API proxy to avoid CORS and keep credentials out of the URL
       const proxyRes = await fetch('/api/login', {
