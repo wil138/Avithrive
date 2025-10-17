@@ -42,7 +42,7 @@ export function BirdwatcherRankings() {
             <Trophy className="w-3 h-3 mr-1" />
             Rankings
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-balance mb-4">Observadores Destacados</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-balance mb-4 merienda-400">Observadores Destacados</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
             Conoce a los observadores de aves más activos de nuestra comunidad y sus increíbles logros.
           </p>

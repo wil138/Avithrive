@@ -27,8 +27,8 @@ export function HeroSection() {
           </Badge>
 
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-balance leading-tight">
-            Aventura, Naturaleza y<span className="text-emerald-400"> Conservación</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-balance leading-tight font-family-roboto">
+            Aventura, Naturaleza y<span className="text-emerald-400 font-family-roboto"> Conservación</span>
           </h1>
 
           {/* Subtitle */}
@@ -57,7 +57,7 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"
+              className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600"
               onClick={() => {
                 const excursionesSection = document.getElementById("excursiones")
                 if (excursionesSection) {
@@ -70,14 +70,14 @@ export function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10"
+              className="hover:bg-white/10"
               asChild
             >
               <a
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                href="_blank"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 bg-transparent"
               >
                 <Play className="w-4 h-4" />
                 <span>Ver Video</span>

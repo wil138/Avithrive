@@ -20,7 +20,7 @@ const posts = [
     },
     content:
       "¡Increíble avistamiento de Quetzal Resplandeciente en Cerro Apante! Después de 3 horas de caminata, finalmente pude fotografiar a esta hermosa especie. La paciencia valió la pena.",
-    image: "/placeholder.svg?key=quetzal",
+    image: "https://media.istockphoto.com/id/1124541665/es/foto/quetzal-resplandeciente-en-costa-rica.jpg?s=612x612&w=0&k=20&c=ulACsMHrLPFQiXC70AskQHK3dwMwG1Y6z7oURh5_PkA=",
     location: "Cerro Apante, Matagalpa",
     species: "Quetzal Resplandeciente",
     timestamp: "hace 2 horas",
@@ -40,7 +40,7 @@ const posts = [
     },
     content:
       "Mañana temprano en Volcán Mombacho. El canto de los tucanes al amanecer es simplemente mágico. Compartiendo algunas fotos de la excursión de hoy.",
-    image: "/placeholder.svg?key=toucan",
+    image: "https://www.faunia.es/content/dam/fau/images/descubre-faunia/planea-tu-visita/animales/aves/tuca%CC%81n-toco/Tucan-toco-Animales-Faunia-3.jpg",
     location: "Volcán Mombacho, Granada",
     species: "Tucán Pico Iris",
     timestamp: "hace 5 horas",
@@ -60,7 +60,7 @@ const posts = [
     },
     content:
       "¡Logré completar mi primera lista de 50 especies! Gracias a la comunidad por todos los consejos. El Guardabarranco fue el número 50 - qué mejor ave nacional para cerrar esta meta.",
-    image: "/placeholder.svg?key=guardabarranco",
+    image: "https://cdn0.bioenciclopedia.com/es/posts/1/7/9/alimentacion_del_momoto_cejiazul_971_2_600.jpg",
     location: "Reserva Natural Chocoyero, Managua",
     species: "Guardabarranco",
     timestamp: "hace 1 día",
@@ -154,7 +154,7 @@ export function CommunityPosts() {
                   alt={post.species}
                   width={600}
                   height={400}
-                  className="w-full h-64 object-cover"
+                  className="w-full h-auto object-cover"
                 />
                 <div className="absolute bottom-3 left-3">
                   <Badge className="bg-black/70 text-white">{post.species}</Badge>

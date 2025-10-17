@@ -17,31 +17,31 @@ export default function SobreNosotrosPage() {
     name: "Juleysi Sandino",
     role: "Marketing",
     description: "Apasionada por el marketing digital, enfocada en estrategias creativas y comunicación clara.",
-    image: "/professional-woman-educator-nicaragua.jpg",
+    image: "/juleysi.jpeg",
   },
   {
     name: "Ashley Putoy",
     role: "Comunicadora",
     description: "Interesada en la comunicación efectiva, con ganas de aportar claridad y conexión.",
-    image: "/professional-woman-educator-nicaragua.jpg",
+    image: "/ashley.jpeg",
   },
   {
     name: "Steven Blandon",
     role: "Diseño",
     description: "Motivado por crear experiencias visuales simples y atractivas.",
-    image: "/professional-man-developer-nicaragua.jpg",
+    image: "/steven_blandon.jpeg",
   },
   {
     name: "Whilton Verrio",
     role: "Desarrollo Web y Estructura",
     description: "Enfocado en el diseño y la estructura de páginas web.",
-    image: "/professional-man-developer-nicaragua.jpg",
+    image: "/wilthon.jpeg",
   },
   {
-    name: "Javier Castro",
-    role: "Base de Datos",
-    description: "Interesado en bases de datos y la organización de la información.",
-    image: "/professional-man-developer-nicaragua.jpg",
+    name: "Jairo Jaenz",
+    role: "Base de Datos, Backend y Frontend",
+    description: "Interesado en bases de datos y desarrollo full-stack.",
+    image: "/ing_Jairo_Jaenz.jpeg",
   },
 ]
 
@@ -178,14 +178,14 @@ export default function SobreNosotrosPage() {
         {/* Team */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center text-emerald-800 mb-8">Nuestro Equipo</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
             {teamMembers.map((member, index) => (
               <Card key={index} className="text-center hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <img
                     src={member.image || "/placeholder.svg"}
                     alt={member.name}
-                    className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                    className="w-64 h-64 rounded-full mx-auto mb-4 object-cover"
                   />
                   <h3 className="text-xl font-semibold text-emerald-800 mb-1">{member.name}</h3>
                   <Badge className="mb-3">{member.role}</Badge>

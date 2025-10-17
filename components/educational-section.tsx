@@ -21,7 +21,7 @@ const educationalContent = [
     type: "Juego Educativo",
     description:
       "Desarrolla tu oído musical identificando los cantos únicos de cada especie. Perfecto para niños y adultos.",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://imagenes.20minutos.es/files/image_640_360/uploads/imagenes/2020/07/01/777px-solsort-620x478.jpeg",
     difficulty: "Fácil",
     duration: "15 min",
     accessibility: true,
@@ -32,7 +32,7 @@ const educationalContent = [
     type: "Simulación",
     description:
       "Explora cómo las aves interactúan en diferentes ecosistemas nicaragüenses y aprende sobre conservación.",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://www.marena.gob.ni/wp-content/uploads/2024/08/WhatsApp-Image-2024-08-29-at-12.08.03-PM-12-1024x641.jpeg",
     difficulty: "Intermedio",
     duration: "45 min",
     accessibility: false,
@@ -64,12 +64,12 @@ export function EducationalSection() {
         {/* Educational Content */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {educationalContent.map((content) => (
-            <Card key={content.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card key={content.id} className="overflow-hidden hover:shadow-lg transition-shadow pt-0">
               <div className="relative">
                 <img
                   src={content.image || "/placeholder.svg"}
                   alt={content.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-86 object-cover"
                 />
                 <div className="absolute top-3 left-3">
                   <Badge className="bg-purple-500 text-white">{content.type}</Badge>

@@ -102,7 +102,7 @@ export function Sidebar() {
                 </Badge>
                 <Badge
                   variant="secondary"
-                  className="bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800"
+                  className="bg-emerald-100 text-emerald-800 border-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800"
                 >
                   <Star className="w-3 h-3 mr-1" />
                   {user.points}
@@ -118,8 +118,10 @@ export function Sidebar() {
                     Iniciar Sesión
                   </Button>
                 </Link>
+              </div>
+              <div className="pt-4">
                 <Link href="/registro" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full justify-start bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700">
+                  <Button variant="outline" className="w-full justify-start bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white">
                     <UserPlus className="h-4 w-4 mr-2" />
                     Registrarse
                   </Button>

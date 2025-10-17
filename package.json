@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@googlemaps/markerclusterer": "^2.0.9",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "latest",
     "@radix-ui/react-alert-dialog": "latest",
@@ -37,6 +38,7 @@
     "@radix-ui/react-toggle": "latest",
     "@radix-ui/react-toggle-group": "latest",
     "@radix-ui/react-tooltip": "latest",
+    "@react-google-maps/api": "^2.19.0",
     "@vercel/analytics": "latest",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
@@ -46,6 +48,7 @@
     "embla-carousel-react": "latest",
     "geist": "latest",
     "input-otp": "latest",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.454.0",
     "next": "^14.2.33",
     "next-themes": "latest",
@@ -53,6 +56,7 @@
     "react-day-picker": "latest",
     "react-dom": "^18",
     "react-hook-form": "latest",
+    "react-leaflet": "^4.2.1",
     "react-resizable-panels": "latest",
     "recharts": "latest",
     "sonner": "latest",
@@ -63,6 +67,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.9",
+    "@types/leaflet": "^1.9.21",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",

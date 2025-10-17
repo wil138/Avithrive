@@ -1,12 +1,80 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap');
+@import 'leaflet/dist/leaflet.css';
+.leaflet-container {
+  /* Puedes ajustar esta altura si lo necesitas, o dejar que Tailwind lo maneje
+     en el componente (ver paso 2), pero tenerlo aquí es un buen respaldo. */
+  height: 100%;
+}
 
 @custom-variant dark (&:is(.dark *));
+h2 {
+  font-family: 'Merienda', cursive;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+h1{
+  font-family: 'Merienda', cursive;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+.merienda-300 {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
 
+.merienda-400 {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: bold;
+}
+
+.merienda-500 {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.merienda-600 {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.merienda-700 {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.merienda-800 {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.merienda-900 {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
 :root {
   --background: oklch(0.99 0.01 120);
   --foreground: oklch(0.15 0.02 140);
   --card: oklch(1 0 0);
+  --orange:rgb(255, 94, 0);
+  --yellow: rgb(255, 174, 33);
   --card-foreground: oklch(0.15 0.02 140);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.02 140);

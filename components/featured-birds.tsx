@@ -11,7 +11,7 @@ const featuredBirds = [
     scientificName: "Eumomota superciliosa",
     status: "Ave Nacional",
     location: "Reserva Natural Volcán Mombacho",
-    image: "/guardabarranco-nicaragua-national-bird-colorful.jpg",
+    image: "https://www.el19digital.com/files/articulos/256146.jpg",
     rarity: "Común",
     lastSeen: "Hace 2 horas",
   },
@@ -21,7 +21,7 @@ const featuredBirds = [
     scientificName: "Pharomachrus mocinno",
     status: "En Peligro",
     location: "Reserva Natural Miraflor",
-    image: "/quetzal-bird-green-red-tropical-nicaragua.jpg",
+    image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQCxLiRqNF-cdwpttq4xXwRgJGJdgK6xaDDL9_PIn-KMir8Z_1dlRz9nhHWe9ylQ2FkwT4AS27gpHSAjf-oXV_xqrcORAr88OOHBxuHscw",
     rarity: "Muy Raro",
     lastSeen: "Hace 1 día",
   },
@@ -31,7 +31,7 @@ const featuredBirds = [
     scientificName: "Ramphastos sulfuratus",
     status: "Protegida",
     location: "Reserva Indio Maíz",
-    image: "/toucan-colorful-beak-tropical-bird-nicaragua.jpg",
+    image: "https://misanimales.com/wp-content/uploads/2023/01/TUCAN-PICO-IRIS-baja.jpg",
     rarity: "Poco Común",
     lastSeen: "Hace 5 horas",
   },
@@ -113,7 +113,7 @@ export function FeaturedBirds() {
               // go to aves
               window.location.href = "/aves"
             }}
-            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"
+            className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600"
             size="lg"
           >
             Explorar Todas las Aves

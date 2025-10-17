@@ -102,13 +102,13 @@ export function CommunitySection() {
                   </div>
                 </CardHeader>
 
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 flex items-center flex-col">
                   <p className="text-sm">{post.content}</p>
 
                   <img
                     src={post.image || "/placeholder.svg"}
                     alt="Avistamiento de ave"
-                    className="w-full h-48 object-cover rounded-lg"
+                    className="w-auto h-96 object-cover rounded-lg"
                   />
 
                   <div className="flex items-center justify-between pt-2">

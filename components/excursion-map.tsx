@@ -1,82 +1,92 @@
 "use client"
 
-import { useState } from "react"
+import React, { useMemo, useState } from "react"
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
+import L from "leaflet"
+import "leaflet/dist/leaflet.css"
 import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { MapPin, Navigation } from "lucide-react"
 
 interface Excursion {
   id: number
   title: string
   location: string
-  difficulty: string
-  price: string
-  rating: number
+  difficulty?: string
+  duration?: string
+  price?: string
+  rating?: number
+  reviews?: number
 }
 
 interface ExcursionMapProps {
   excursions: Excursion[]
 }
 
+function getCoords(location: string): [number, number] {
+  const loc = (location || "").toLowerCase()
+  if (loc.includes("granada")) return [11.9315, -85.9569]
+  if (loc.includes("chinandega")) return [12.6294, -87.1576]
+  if (loc.includes("matagalpa")) return [12.9167, -85.9167]
+  if (loc.includes("río san juan") || loc.includes("rio san juan")) return [11.0833, -84.8333]
+  if (loc.includes("masaya")) return [11.9670, -86.0946]
+  if (loc.includes("estel")) return [13.0849, -86.3533]
+
+  // Fallback: center of Nicaragua
+  return [12.865416, -85.207229]
+}
+
 export function ExcursionMap({ excursions }: ExcursionMapProps) {
   const [selectedExcursion, setSelectedExcursion] = useState<number | null>(null)
 
-  // Coordenadas aproximadas de las reservas en Nicaragua
-  const locations = [
-    { id: 1, name: "Volcán Mombacho", lat: 11.8267, lng: -85.9847, region: "Granada" },
-    { id: 2, name: "Estero Padre Ramos", lat: 12.7833, lng: -87.4167, region: "Chinandega" },
-    { id: 3, name: "Cerro Apante", lat: 12.9167, lng: -85.9167, region: "Matagalpa" },
-    { id: 4, name: "Los Guatuzos", lat: 11.0833, lng: -84.8333, region: "Río San Juan" },
-  ]
+  const points = useMemo(
+    () => excursions.map((e) => ({ ...e, coords: getCoords(e.location) })),
+    [excursions]
+  )
+
+  const center: [number, number] = points.length ? points[0].coords : [12.865416, -85.207229]
+
+  const createIcon = (selected = false) =>
+    L.divIcon({
+      className: "",
+      html: `<div style="width:18px;height:18px;background:${selected ? "#065f46" : "#059669"};border-radius:50%;box-shadow:0 0 0 4px rgba(5,150,105,0.12);"></div>`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9],
+    })
 
   return (
     <div className="space-y-4">
-      {/* Mapa placeholder - En producción se usaría Mapbox o Google Maps */}
-      <div className="relative h-96 bg-gradient-to-br from-emerald-100 to-blue-100 rounded-lg overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/nicaragua-map-outline.jpg')] bg-center bg-no-repeat bg-contain opacity-20" />
+      <div className="w-full h-72">
+        <MapContainer center={center} zoom={7} scrollWheelZoom={true} className="w-full h-full rounded-lg shadow-xl">
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-        {/* Marcadores de ubicación */}
-        {locations.map((location, index) => (
-          <div
-            key={location.id}
-            className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
-              selectedExcursion === location.id ? "scale-125 z-10" : "hover:scale-110"
-            }`}
-            style={{
-              left: `${20 + index * 20}%`,
-              top: `${30 + index * 15}%`,
-            }}
-            onClick={() => setSelectedExcursion(selectedExcursion === location.id ? null : location.id)}
-          >
-            <div className={`relative ${selectedExcursion === location.id ? "text-emerald-600" : "text-emerald-500"}`}>
-              <MapPin className="h-8 w-8 drop-shadow-lg" fill="currentColor" />
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                <Badge variant="secondary" className="text-xs">
-                  {location.region}
-                </Badge>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {/* Leyenda */}
-        <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3">
-          <div className="flex items-center gap-2 text-sm">
-            <MapPin className="h-4 w-4 text-emerald-500" />
-            <span>Reservas naturales</span>
-          </div>
-        </div>
-
-        {/* Brújula */}
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2">
-          <Navigation className="h-5 w-5 text-gray-600" />
-        </div>
+          {points.map((p) => (
+            <Marker
+              key={p.id}
+              position={p.coords}
+              icon={createIcon(selectedExcursion === p.id)}
+              eventHandlers={{
+                click: () => setSelectedExcursion(p.id),
+              }}
+            >
+              <Popup>
+                <div className="space-y-1">
+                  <div className="font-semibold">{p.title}</div>
+                  <div className="text-sm text-muted-foreground">{p.location}</div>
+                  {p.price && <div className="text-sm">Precio: {p.price}</div>}
+                  {p.rating !== undefined && <div className="text-sm">⭐ {p.rating}</div>}
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
       </div>
 
       {/* Lista de ubicaciones */}
       <div className="space-y-2">
         <h4 className="font-semibold text-gray-900">Reservas disponibles:</h4>
-        {excursions.map((excursion, index) => (
+        {excursions.map((excursion) => (
           <Card
             key={excursion.id}
             className={`p-3 cursor-pointer transition-colors ${

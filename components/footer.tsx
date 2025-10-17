@@ -10,10 +10,10 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
+              <div className="h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                <img src="/icono_negativo.svg" alt="Logo"  className="h-10 w-auto"/>
               </div>
-              <span className="font-bold text-xl">Avithrive</span>
+            <span className="text-white font-bold text-sm">Avithrive</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Promoviendo el turismo sostenible y la conservación de aves en Nicaragua desde 2025.
