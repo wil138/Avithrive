@@ -1,10 +1,13 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
-import L from "leaflet"
-import "leaflet/dist/leaflet.css"
+import dynamic from "next/dynamic"
 import { Card } from "@/components/ui/card"
+
+const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false })
+const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false })
+const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false })
+const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false })
 
 interface Excursion {
   id: number
@@ -36,6 +39,7 @@ function getCoords(location: string): [number, number] {
 
 export function ExcursionMap({ excursions }: ExcursionMapProps) {
   const [selectedExcursion, setSelectedExcursion] = useState<number | null>(null)
+  const [L, setL] = useState<any>(null)
 
   const points = useMemo(
     () => excursions.map((e) => ({ ...e, coords: getCoords(e.location) })),
@@ -44,43 +48,58 @@ export function ExcursionMap({ excursions }: ExcursionMapProps) {
 
   const center: [number, number] = points.length ? points[0].coords : [12.865416, -85.207229]
 
-  const createIcon = (selected = false) =>
-    L.divIcon({
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      import("leaflet").then((leaflet) => {
+        setL(leaflet.default)
+        import("leaflet/dist/leaflet.css")
+      })
+    }
+  }, [])
+
+  const createIcon = (selected = false) => {
+    if (!L) return undefined
+    return L.divIcon({
       className: "",
       html: `<div style="width:18px;height:18px;background:${selected ? "#065f46" : "#059669"};border-radius:50%;box-shadow:0 0 0 4px rgba(5,150,105,0.12);"></div>`,
       iconSize: [18, 18],
       iconAnchor: [9, 9],
     })
+  }
 
   return (
     <div className="space-y-4">
       <div className="w-full h-72">
-        <MapContainer center={center} zoom={7} scrollWheelZoom={true} className="w-full h-full rounded-lg shadow-xl">
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+        {typeof window !== "undefined" && L ? (
+          <MapContainer center={center} zoom={7} scrollWheelZoom={true} className="w-full h-full rounded-lg shadow-xl">
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-          {points.map((p) => (
-            <Marker
-              key={p.id}
-              position={p.coords}
-              icon={createIcon(selectedExcursion === p.id)}
-              eventHandlers={{
-                click: () => setSelectedExcursion(p.id),
-              }}
-            >
-              <Popup>
-                <div className="space-y-1">
-                  <div className="font-semibold">{p.title}</div>
-                  <div className="text-sm text-muted-foreground">{p.location}</div>
-                  {p.price && <div className="text-sm">Precio: {p.price}</div>}
-                  {p.rating !== undefined && <div className="text-sm">⭐ {p.rating}</div>}
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
+            {points.map((p) => (
+              <Marker
+                key={p.id}
+                position={p.coords}
+                icon={createIcon(selectedExcursion === p.id)}
+                eventHandlers={{
+                  click: () => setSelectedExcursion(p.id),
+                }}
+              >
+                <Popup>
+                  <div className="space-y-1">
+                    <div className="font-semibold">{p.title}</div>
+                    <div className="text-sm text-muted-foreground">{p.location}</div>
+                    {p.price && <div className="text-sm">Precio: {p.price}</div>}
+                    {p.rating !== undefined && <div className="text-sm">⭐ {p.rating}</div>}
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        ) : (
+          <div className="h-full bg-gray-100 rounded-lg flex items-center justify-center">Cargando mapa...</div>
+        )}
       </div>
 
       {/* Lista de ubicaciones */}
