@@ -185,7 +185,7 @@ export default function EducacionPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50">
+    <div className="min-h-screen">
       {/* Header Section */}
       <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-16">
         <div className="container mx-auto px-4">
@@ -261,7 +261,7 @@ export default function EducacionPage() {
                       <CardHeader>
                         <div className="flex items-start justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="p-2 bg-emerald-100 rounded-lg">
+                            <div className="p-2 rounded-lg">
                               <IconComponent className="h-6 w-6 text-emerald-600" aria-hidden="true" />
                             </div>
                             <div>
@@ -417,7 +417,7 @@ export default function EducacionPage() {
             </div>
 
             {/* Accessibility Settings */}
-            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50">
+            <Card className="">
               <CardHeader>
                 <CardTitle className="text-emerald-800">Configuración de Accesibilidad</CardTitle>
                 <CardDescription>Personaliza tu experiencia de aprendizaje según tus necesidades</CardDescription>

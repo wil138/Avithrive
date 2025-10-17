@@ -58,7 +58,7 @@ export function ExcursionCard({ excursion }: ExcursionCardProps) {
           <CardHeader>
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{excursion.title}</h3>
+                <h3 className="text-xl font-boldmb-2">{excursion.title}</h3>
                 <div className="flex items-center text-gray-600 mb-2">
                   <MapPin className="h-4 w-4 mr-1" />
                   <span className="text-sm">{excursion.location}</span>
@@ -85,7 +85,7 @@ export function ExcursionCard({ excursion }: ExcursionCardProps) {
             <p className="text-gray-700 mb-4 text-pretty">{excursion.description}</p>
 
             <div className="mb-4">
-              <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
+              <h4 className="font-semibold mb-2 flex items-center">
                 <Binoculars className="h-4 w-4 mr-2" />
                 Especies que puedes avistar:
               </h4>
@@ -99,7 +99,7 @@ export function ExcursionCard({ excursion }: ExcursionCardProps) {
             </div>
 
             <div className="mb-4">
-              <h4 className="font-semibold text-gray-900 mb-2">Destacados:</h4>
+              <h4 className="font-semibold mb-2">Destacados:</h4>
               <ul className="text-sm text-gray-600 space-y-1">
                 {excursion.highlights.map((highlight, index) => (
                   <li key={index} className="flex items-center">

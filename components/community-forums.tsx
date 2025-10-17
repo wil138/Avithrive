@@ -125,11 +125,11 @@ export function CommunityForums() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {forumCategories.map((category) => (
               <Card key={category.id} className={`cursor-pointer hover:shadow-md transition-shadow ${category.color}`}>
-                <CardContent className="p-4">
+                <CardContent className="p-4 bg-none">
                   <div className="flex items-start space-x-3">
                     <div className="mt-1">{category.icon}</div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-lg">{category.name}</h3>
+                      <h3 className="font-semibold text-lg text-gray-900">{category.name}</h3>
                       <p className="text-sm text-gray-600 mb-3">{category.description}</p>
                       <div className="flex items-center justify-between text-xs text-gray-500">
                         <div className="flex space-x-4">

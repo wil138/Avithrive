@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -20,61 +20,11 @@ import {
   Star,
   Share2,
   Download,
+  Weight,
 } from "lucide-react"
+// Load birds data from public/birds.json at runtime (client-side fetch)
 
-// Mock data - in real app this would come from API
-const birdDetails = {
-  1: {
-    id: 1,
-    commonName: "Guardabarranco",
-    scientificName: "Eumomota superciliosa",
-    family: "Momotidae",
-    order: "Coraciiformes",
-    images: ["/guardabarranco-bird-nicaragua.jpg", "/guardabarranco-nest.jpg", "/guardabarranco-flying.jpg"],
-    habitat: "Bosque seco",
-    region: "Todo el país",
-    rarity: "Común",
-    status: "Residente",
-    description:
-      "El Guardabarranco es el ave nacional de Nicaragua, conocida por su cola distintiva en forma de raqueta y sus colores vibrantes. Habita en bosques secos y áreas abiertas, donde excava túneles en barrancos para anidar.",
-    detailedDescription:
-      "Esta hermosa ave pertenece a la familia Momotidae y es endémica de América Central. Su nombre proviene de su hábito de anidar en barrancos, excavando túneles de hasta un metro de profundidad. Los adultos miden entre 34-38 cm de longitud y pesan aproximadamente 65 gramos.",
-    physicalCharacteristics: {
-      length: "34-38 cm",
-      weight: "65 g",
-      wingspan: "45-50 cm",
-      colors: ["Verde esmeralda", "Azul turquesa", "Marrón canela", "Negro"],
-      sexualDimorphism: "Mínimo - ambos sexos similares",
-    },
-    behavior: {
-      diet: "Insectos, pequeños reptiles, frutas",
-      nesting: "Túneles en barrancos de tierra",
-      breeding: "Marzo a julio",
-      social: "Parejas o grupos pequeños",
-    },
-    distribution: {
-      global: "México a Costa Rica",
-      nicaragua: "Todo el territorio nacional",
-      altitude: "0-1,200 msnm",
-      habitat: ["Bosque seco tropical", "Áreas abiertas con árboles", "Bordes de bosque"],
-    },
-    conservation: {
-      status: "Preocupación menor (LC)",
-      threats: ["Deforestación", "Pérdida de hábitat"],
-      population: "Estable",
-    },
-    bestSpots: ["Reserva Natural Volcán Masaya", "Parque Nacional Saslaya", "Reserva Silvestre Privada Domitila"],
-    seasonality: {
-      resident: true,
-      breeding: "Marzo-Julio",
-      bestMonths: ["Abril", "Mayo", "Junio"],
-    },
-    photos: 234,
-    recordings: 12,
-    sightings: 1250,
-    lastSeen: "hace 2 días",
-  },
-}
+// Use shared birds array (catalog) as source; page will apply safe fallbacks for missing nested fields
 
 export default function BirdDetailPage() {
   const params = useParams()
@@ -84,7 +34,86 @@ export default function BirdDetailPage() {
   const [isSeen, setIsSeen] = useState(true)
 
   const birdId = Number.parseInt(params.id as string)
-  const bird = birdDetails[birdId as keyof typeof birdDetails]
+  const [raw, setRaw] = useState<any | undefined>(undefined)
+  const [loading, setLoading] = useState(true)
+
+  // fetch birds.json then find by id
+  useEffect(() => {
+    let mounted = true
+    fetch('/birds.json')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!mounted) return
+        const found = Array.isArray(data) ? data.find((b: any) => Number(b.id) === birdId) : undefined
+        setRaw(found)
+      })
+      .catch(() => setRaw(undefined))
+      .finally(() => mounted && setLoading(false))
+
+    return () => {
+      mounted = false
+    }
+  }, [birdId])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div>Cargando...</div>
+      </div>
+    )
+  }
+
+  // adapter: create a consistent richer bird object with safe defaults for the page
+  const bird = raw
+    ? {
+        id: raw.id,
+        commonName: raw.commonName,
+        scientificName: raw.scientificName || "",
+        family: (raw as any).family || "",
+        order: (raw as any).order || "",
+        images: Array.isArray(raw.images) && raw.images.length ? raw.images : raw.image ? [raw.image] : ["/placeholder.svg"],
+        habitat: raw.habitat || "",
+        region: raw.region || "",
+        rarity: raw.rarity || "",
+        status: raw.status || "",
+        description: raw.description || "",
+        detailedDescription: (raw as any).detailedDescription || raw.description || "",
+        physicalCharacteristics: (raw as any).physicalCharacteristics || {
+          length: "-",
+          weight: "-",
+          wingspan: "-",
+          colors: raw.colors || [],
+          sexualDimorphism: "-",
+        },
+        behavior: (raw as any).behavior || {
+          diet: "-",
+          nesting: "-",
+          breeding: "-",
+          social: "-",
+        },
+        distribution: (raw as any).distribution || {
+          global: "-",
+          nicaragua: raw.region || "-",
+          altitude: "-",
+          habitat: raw.habitat ? [raw.habitat] : [],
+        },
+        conservation: (raw as any).conservation || {
+          status: raw.conservationStatus || "-",
+          threats: (raw as any).conservation?.threats || [],
+          population: (raw as any).conservation?.population || "-",
+        },
+        bestSpots: (raw as any).bestSpots || [],
+        seasonality: (raw as any).seasonality || {
+          resident: true,
+          breeding: "-",
+          bestMonths: raw.bestMonths || [],
+        },
+        photos: raw.photos || 0,
+        recordings: (raw as any).recordings || 0,
+        sightings: (raw as any).sightings || 0,
+        lastSeen: raw.lastSeen || "",
+      }
+    : undefined
 
   if (!bird) {
     return (
@@ -144,13 +173,13 @@ export default function BirdDetailPage() {
                     alt={`${bird.commonName} - Imagen ${currentImageIndex + 1}`}
                     width={800}
                     height={500}
-                    className="w-full h-96 object-cover rounded-t-lg"
+                    className="w-full h-96 object-contain rounded-t-lg"
                   />
 
                   {/* Image Navigation */}
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
                     <div className="flex gap-2">
-                      {bird.images.map((_, index) => (
+                      {bird.images.map((_: string, index: number) => (
                         <button
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
@@ -179,7 +208,7 @@ export default function BirdDetailPage() {
                 {/* Thumbnail Strip */}
                 <div className="p-4 border-t">
                   <div className="flex gap-2 overflow-x-auto">
-                    {bird.images.map((image, index) => (
+                    {bird.images.map((image: string, index: number) => (
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
@@ -247,7 +276,7 @@ export default function BirdDetailPage() {
                     <div>
                       <p className="font-semibold text-gray-900 mb-2">Colores</p>
                       <div className="flex flex-wrap gap-2">
-                        {bird.physicalCharacteristics.colors.map((color) => (
+                        {bird.physicalCharacteristics.colors.map((color: string) => (
                           <Badge key={color} variant="outline">
                             {color}
                           </Badge>
@@ -310,7 +339,7 @@ export default function BirdDetailPage() {
                     <div>
                       <p className="font-semibold text-gray-900 mb-2">Hábitats Preferidos</p>
                       <div className="flex flex-wrap gap-2">
-                        {bird.distribution.habitat.map((habitat) => (
+                        {bird.distribution.habitat.map((habitat: string) => (
                           <Badge key={habitat} variant="secondary">
                             {habitat}
                           </Badge>
@@ -354,7 +383,7 @@ export default function BirdDetailPage() {
                     <div>
                       <p className="font-semibold text-gray-900 mb-2">Amenazas</p>
                       <div className="flex flex-wrap gap-2">
-                        {bird.conservation.threats.map((threat) => (
+                        {bird.conservation.threats.map((threat: string) => (
                           <Badge key={threat} variant="destructive">
                             {threat}
                           </Badge>
@@ -420,8 +449,8 @@ export default function BirdDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {bird.bestSpots.map((spot, index) => (
-                    <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                  {bird.bestSpots.map((spot: string, index: number) => (
+                    <div key={index} className="flex items-center gap-3 p-3 rounded-lg">
                       <div className="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0" />
                       <span className="text-sm font-medium">{spot}</span>
                     </div>
@@ -442,7 +471,7 @@ export default function BirdDetailPage() {
                 <div>
                   <p className="text-sm font-medium mb-2">Mejores meses para observar</p>
                   <div className="flex flex-wrap gap-1">
-                    {bird.seasonality.bestMonths.map((month) => (
+                    {bird.seasonality.bestMonths.map((month: string) => (
                       <Badge key={month} className="bg-emerald-100 text-emerald-800">
                         {month}
                       </Badge>

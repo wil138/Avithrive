@@ -8,12 +8,17 @@ import { Button } from "@/components/ui/button"
 import { Eye, EyeOff, Heart, Volume2, MapPin, Camera, Star, Calendar } from "lucide-react"
 import Image from "next/image"
 
+// Single source of truth for bird data used by grid + details page
 export const birds = [
   {
     id: 1,
     commonName: "Guardabarranco",
     scientificName: "Eumomota superciliosa",
-    image: "/guardabarranco-bird-nicaragua-national.jpg",
+    images: [
+      "https://static.wixstatic.com/media/0961f0_941f8b2cac95461188ceec72c200b719~mv2.jpeg/v1/fill/w_539,h_960,al_c,q_85/0961f0_941f8b2cac95461188ceec72c200b719~mv2.jpeg",
+      "https://www.vivanicaragua.com.ni/contenido/archivos/2019/09/Guardabarranco-es-una-bella-ave-colorida.jpg",
+    ],
+    image: "https://www.el19digital.com/files/articulos/256146.jpg",
     habitat: "Bosque seco",
     region: "Todo el país",
     rarity: "Común",
@@ -32,11 +37,15 @@ export const birds = [
     id: 2,
     commonName: "Quetzal Resplandeciente",
     scientificName: "Pharomachrus mocinno",
-    image: "/quetzal-bird-green-red-guatemala-nicaragua.jpg",
+    images: [
+      "https://media.istockphoto.com/id/1253027644/es/foto/quetzal-resplandeciente-volador-pharomachrus-mocinno-savegre-en-costa-rica-con-fondo-verde-del.jpg",
+    ],
+    image:
+      "https://media.istockphoto.com/id/1253027644/es/foto/quetzal-resplandeciente-volador-pharomachrus-mocinno-savegre-en-costa-rica-con-fondo-verde-del.jpg",
     habitat: "Bosque nuboso",
     region: "Matagalpa, Jinotega",
     rarity: "Rara",
-    status: "Residente",
+    status: "Migratoria",
     type: "Endémica regional",
     description: "Una de las aves más hermosas del mundo, símbolo de libertad en Mesoamérica.",
     colors: ["Verde", "Rojo"],
@@ -51,6 +60,9 @@ export const birds = [
     id: 3,
     commonName: "Tucán Pico Iris",
     scientificName: "Ramphastos sulfuratus",
+    images: [
+      "https://www.ecoregistros.org/site/images/dataimages/2018/02/05/245578/_MG_8659.jpg",
+    ],
     image: "/toucan-colorful-beak-tropical-bird.jpg",
     habitat: "Bosque húmedo",
     region: "RACCS, Río San Juan",
@@ -70,6 +82,7 @@ export const birds = [
     id: 4,
     commonName: "Colibrí Garganta Rubí",
     scientificName: "Archilochus colubris",
+    images: ["/ruby-throated-hummingbird-red-green.jpg"],
     image: "/ruby-throated-hummingbird-red-green.jpg",
     habitat: "Jardines, bosque",
     region: "Todo el país",
@@ -89,6 +102,7 @@ export const birds = [
     id: 5,
     commonName: "Lapa Verde",
     scientificName: "Ara ambiguus",
+    images: ["/great-green-macaw-parrot-nicaragua-endangered.jpg"],
     image: "/great-green-macaw-parrot-nicaragua-endangered.jpg",
     habitat: "Bosque húmedo",
     region: "RACCS, Río San Juan",
@@ -108,6 +122,7 @@ export const birds = [
     id: 6,
     commonName: "Pájaro Campana",
     scientificName: "Procnias tricarunculatus",
+    images: ["/three-wattled-bellbird-white-brown.jpg"],
     image: "/three-wattled-bellbird-white-brown.jpg",
     habitat: "Bosque nuboso",
     region: "Matagalpa, Jinotega",
@@ -127,6 +142,7 @@ export const birds = [
     id: 7,
     commonName: "Momoto Cejiazul",
     scientificName: "Aspatha gularis",
+    images: ["/blue-crowned-motmot-nicaragua-endemic.jpg"],
     image: "/blue-crowned-motmot-nicaragua-endemic.jpg",
     habitat: "Bosque húmedo montano",
     region: "Norte de Nicaragua",
@@ -146,6 +162,7 @@ export const birds = [
     id: 8,
     commonName: "Reinita Migratoria",
     scientificName: "Setophaga ruticilla",
+    images: ["/american-redstart-warbler-migratory.jpg"],
     image: "/american-redstart-warbler-migratory.jpg",
     habitat: "Bosques mixtos",
     region: "Todo el país (temporal)",
@@ -253,28 +270,17 @@ export function BirdGrid({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {displayed.map((bird) => (
-        <Card
-          key={bird.id}
-          className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-        >
-          <div className="relative">
-            <Image
-              src={bird.image || "/placeholder.svg"}
-              alt={bird.commonName}
-              width={400}
-              height={250}
-              className="w-full h-48 object-cover"
-            />
+      {displayed.map((bird) => (
+        <Card key={bird.id} className="overflow-clip hover:shadow-lg transition-shadow pt-0">
+          <div className="relative overflow-auto">
+            <Image src={bird.images?.[0] || bird.image || "/placeholder.svg"} alt={bird.commonName} width={400} height={250} className="w-full h-86 object-cover" />
 
-            {/* Status Overlay */}
             <div className="absolute top-3 left-3 flex flex-col gap-2">
               <Badge className={getRarityColor(bird.rarity)}>{bird.rarity}</Badge>
               <Badge className={getTypeColor(bird.type)}>{bird.type}</Badge>
-              {seenBirds.has(bird.id) && <Badge className="bg-emerald-100 text-emerald-800">Vista</Badge>}
+              {seenBirds.has(bird.id) && <Badge className=" text-emerald-800">Vista</Badge>}
             </div>
 
-            {/* Action Buttons */}
             <div className="absolute top-3 right-3 flex gap-2">
               <Button size="sm" variant="secondary" className="h-8 w-8 p-0" onClick={() => toggleFavorite(bird.id)}>
                 <Heart className={`h-4 w-4 ${favoriteBirds.has(bird.id) ? "fill-red-500 text-red-500" : ""}`} />
@@ -284,7 +290,6 @@ export function BirdGrid({
               </Button>
             </div>
 
-            {/* Audio Indicator */}
             {bird.audio && (
               <div className="absolute bottom-3 right-3">
                 <Button size="sm" variant="secondary" className="h-8 w-8 p-0">
@@ -293,17 +298,16 @@ export function BirdGrid({
               </div>
             )}
 
-            {/* Conservation Status */}
             <div className="absolute bottom-3 left-3">
-              <Badge className={getConservationColor(bird.conservationStatus)}>{bird.conservationStatus}</Badge>
+              <Badge className={getConservationColor((bird as any).conservationStatus)}>{(bird as any).conservationStatus}</Badge>
             </div>
           </div>
 
           <CardContent className="p-4">
             <div className="space-y-3">
               <div>
-                <h3 className="font-bold text-lg text-gray-900">{bird.commonName}</h3>
-                <p className="text-sm italic text-gray-600">{bird.scientificName}</p>
+                <h3 className="font-bold text-lg ">{bird.commonName}</h3>
+                <p className="text-sm italic text-gray-400">{bird.scientificName}</p>
               </div>
 
               <p className="text-sm text-gray-700 text-pretty line-clamp-2">{bird.description}</p>
@@ -329,12 +333,12 @@ export function BirdGrid({
 
                 <div className="flex items-center text-sm text-gray-600">
                   <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
-                  <span className="truncate">Mejor época: {bird.bestMonths.slice(0, 2).join(", ")}</span>
+                  <span className="truncate">Mejor época: {bird.bestMonths?.slice(0, 2).join(", ") || ""}</span>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-1">
-                {bird.colors.map((color) => (
+                {(bird.colors || []).map((color) => (
                   <Badge key={color} variant="outline" className="text-xs">
                     {color}
                   </Badge>

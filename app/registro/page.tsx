@@ -20,6 +20,8 @@ export default function RegistroPage() {
     email: "",
     password: "",
     confirmPassword: "",
+    age: "",
+    phone: "",
   })
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -60,11 +62,12 @@ export default function RegistroPage() {
       return
     }
 
-    const success = await register(formData.email, formData.password, formData.name)
-    if (success) {
+    const age = Number(formData.age || 0)
+    const result = await register(formData.email, formData.password, formData.name, age, formData.phone)
+    if (result.success) {
       router.push("/")
     } else {
-      setError("Error al crear la cuenta. Intenta de nuevo.")
+      setError(result.error ?? "Error al crear la cuenta. Intenta de nuevo.")
     }
   }
 
@@ -72,8 +75,8 @@ export default function RegistroPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4">
-            <Bird className="h-6 w-6 text-white" />
+          <div className="mx-auto h-14 w-14 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4">
+            <img src="icono_negativo.svg" alt="" className="h-10 w-auto"/>
           </div>
           <CardTitle className="text-2xl font-bold">Crear Cuenta</CardTitle>
           <CardDescription>Únete a la comunidad de observadores de aves de Nicaragua</CardDescription>
@@ -107,6 +110,32 @@ export default function RegistroPage() {
                 type="email"
                 placeholder="tu@email.com"
                 value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="age">Edad</Label>
+              <Input
+                id="age"
+                name="age"
+                type="number"
+                placeholder="Tu edad"
+                value={formData.age}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone">Teléfono</Label>
+              <Input
+                id="phone"
+                name="phone"
+                type="text"
+                placeholder="Tu número de teléfono"
+                value={formData.phone}
                 onChange={handleInputChange}
                 required
               />
@@ -160,7 +189,7 @@ export default function RegistroPage() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="space-x-2">
               <Checkbox
                 id="terms"
                 checked={acceptTerms}
@@ -179,11 +208,11 @@ export default function RegistroPage() {
             </div>
           </CardContent>
 
-          <CardFooter className="flex flex-col space-y-4">
+          <CardFooter className="flex flex-col space-y-4 pt-8">
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"
-              disabled={isLoading}
+              disabled={isLoading || !acceptTerms}
             >
               {isLoading ? "Creando cuenta..." : "Crear Cuenta"}
             </Button>

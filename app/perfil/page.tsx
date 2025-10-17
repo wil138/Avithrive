@@ -1,97 +1,115 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useAuth } from "@/contexts/auth-context"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Trophy, Star, MapPin, Calendar, Camera, Award, TrendingUp, Settings, Edit, Share2 } from "lucide-react"
+import { Trophy, Star, MapPin, Calendar, Camera, Award, TrendingUp, Settings, Edit, Share2, Phone, User } from "lucide-react"
 
 export default function PerfilPage() {
   const [activeTab, setActiveTab] = useState("overview")
 
+  const { user } = useAuth()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const userProfile = {
-    name: "María Elena Rodríguez",
-    username: "@maria_aviturista",
-    level: 4,
-    title: "Observadora Experta",
-    points: 2850,
-    nextLevelPoints: 3500,
-    joinDate: "Marzo 2023",
-    location: "Managua, Nicaragua",
-    avatar: "/professional-woman-birdwatcher-nicaragua.jpg",
-    bio: "Apasionada por las aves desde la infancia. Me especializo en aves acuáticas y rapaces. Siempre dispuesta a compartir conocimientos con nuevos avituristas.",
+    name: user?.name ?? "N/A",
+    username: user?.username ? (user.username.startsWith('@') ? user.username : `@${user.username}`) : "N/A",
+    level: user?.level ?? 1,
+    title: user?.title ?? "Observador",
+    points: user?.points ?? 0,
+    nextLevelPoints: user?.nextLevelPoints ?? (user?.points ?? 0) + 1000,
+    joinDate: user?.joinDate ?? "N/A",
+    location: user?.location ?? "N/A",
+    avatar: user?.avatar ?? undefined,
+    phone: user?.phone ?? "N/A",
+    age: user?.age ?? null,
+    bio: user?.bio ?? "Perfil nuevo. Completa tu información para personalizar tu perfil.",
     stats: {
-      speciesSeen: 187,
-      totalSpecies: 500,
-      excursionsCompleted: 23,
-      photosShared: 156,
-      postsCreated: 45,
-      helpedUsers: 89,
+      speciesSeen: user?.stats?.speciesSeen ?? 0,
+      totalSpecies: user?.stats?.totalSpecies ?? 0,
+      excursionsCompleted: user?.stats?.excursionsCompleted ?? 0,
+      photosShared: user?.stats?.photosShared ?? 0,
+      postsCreated: user?.stats?.postsCreated ?? 0,
+      helpedUsers: user?.stats?.helpedUsers ?? 0,
+      identificationAccuracy: user?.stats?.identificationAccuracy ?? undefined,
     },
   }
 
-  const badges = [
+  // Helper: generate an SVG data URL with initials (used when no avatar URL is provided)
+  const generateInitialsDataUrl = (fullName: string, size = 128) => {
+    const parts = (fullName || "").split(" ").filter(Boolean)
+    // Use first and last name initials when available (e.g., "Roberto Silva" -> "RS").
+    // If only one name is present, use its first letter.
+    let initials = "N"
+    if (parts.length === 1) initials = (parts[0][0] || "N").toUpperCase()
+    else initials = ((parts[0][0] || "N") + (parts[parts.length - 1][0] || "A")).toUpperCase()
+
+    const bg = "#065f46" // emerald-700
+    const fg = "#ffffff"
+    const fontSize = Math.round(size / 2.8)
+
+    const svg = `<?xml version='1.0' encoding='UTF-8'?>\n<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}' viewBox='0 0 ${size} ${size}'>\n  <rect width='100%' height='100%' fill='${bg}' rx='${Math.round(size * 0.16)}'/>\n  <text x='50%' y='50%' dy='0.36em' font-family='Arial, Helvetica, sans-serif' font-size='${fontSize}' fill='${fg}' text-anchor='middle'>${initials}</text>\n</svg>`
+
+    return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
+  }
+
+  // Prefer a real avatar image only when it's not a placeholder.
+  // Many placeholder images include the word "placeholder" or similar query keys.
+  const isPlaceholderAvatar = (url?: string) => {
+    if (!url) return true
+    try {
+      return /placeholder/i.test(url) || url.trim() === "" || url.includes("/placeholder")
+    } catch (e) {
+      return true
+    }
+  }
+
+  const avatarSrc = userProfile.avatar && !isPlaceholderAvatar(userProfile.avatar)
+    ? userProfile.avatar
+    : generateInitialsDataUrl(userProfile.name)
+
+  const badges = user?.badges ?? [
     { name: "Primera Observación", icon: "🔍", earned: true, date: "Mar 2023" },
     { name: "Explorador", icon: "🗺️", earned: true, date: "Abr 2023" },
-    { name: "Fotógrafo", icon: "📸", earned: true, date: "May 2023" },
-    { name: "Mentor", icon: "👥", earned: true, date: "Jun 2023" },
-    { name: "Conservacionista", icon: "🌿", earned: true, date: "Jul 2023" },
-    { name: "Especialista en Rapaces", icon: "🦅", earned: true, date: "Ago 2023" },
-    { name: "Madrugador", icon: "🌅", earned: false, date: null },
-    { name: "Aventurero Nocturno", icon: "🌙", earned: false, date: null },
   ]
 
-  const recentSightings = [
-    {
-      species: "Guardabarranco",
-      scientificName: "Eumomota superciliosa",
-      location: "Reserva Natural Volcán Mombacho",
-      date: "2024-01-15",
-      photo: "/guardabarranco-bird-nicaragua.jpg",
-      rarity: "Común",
-    },
-    {
-      species: "Quetzal Resplandeciente",
-      scientificName: "Pharomachrus mocinno",
-      location: "Reserva Natural Miraflor",
-      date: "2024-01-12",
-      photo: "/quetzal-bird-nicaragua.jpg",
-      rarity: "Raro",
-    },
-    {
-      species: "Tucán Pico Iris",
-      scientificName: "Ramphastos sulfuratus",
-      location: "Reserva Indio Maíz",
-      date: "2024-01-10",
-      photo: "/toucan-bird-nicaragua.jpg",
-      rarity: "Poco Común",
-    },
-  ]
+  const recentSightings = user?.recentSightings ?? []
 
-  const achievements = [
-    { title: "Primer Avistamiento", description: "Registraste tu primera observación", points: 50 },
-    { title: "Explorador Dedicado", description: "Visitaste 10 reservas diferentes", points: 200 },
-    { title: "Fotógrafo Experto", description: "Compartiste 100 fotografías de aves", points: 300 },
-    { title: "Mentor Comunitario", description: "Ayudaste a 50 nuevos avituristas", points: 500 },
-  ]
+  const achievements = user?.achievements ?? []
+
+  const favoriteLocations = user?.favoriteLocations ?? []
+  const specializations = user?.specializations ?? []
+
+  if (!mounted) {
+    return <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50"><div className="container mx-auto px-4 py-8">Loading...</div></div>
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50">
+    <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
         {/* Profile Header */}
         <Card className="mb-8 bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <Avatar className="w-32 h-32 border-4 border-white">
-                <AvatarImage src={userProfile.avatar || "/placeholder.svg"} alt={userProfile.name} />
+                <AvatarImage src={avatarSrc} alt={userProfile.name} />
                 <AvatarFallback className="text-2xl bg-emerald-700">
-                  {userProfile.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
+                  {(() => {
+                    const parts = userProfile.name.split(" ").filter(Boolean)
+                    if (parts.length === 0) return "N"
+                    if (parts.length === 1) return (parts[0][0] || "N").toUpperCase()
+                    const first = (parts[0][0] || "N").toUpperCase()
+                    const last = (parts[parts.length - 1][0] || "A").toUpperCase()
+                    return `${first}${last}`
+                  })()}
                 </AvatarFallback>
               </Avatar>
 
@@ -111,8 +129,16 @@ export default function PerfilPage() {
                     {userProfile.location}
                   </div>
                   <div className="flex items-center gap-1">
+                    <User className="h-4 w-4" />
+                    {userProfile.name}
+                  </div>
+                  <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
                     Miembro desde {userProfile.joinDate}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Phone className="h-4 w-4" />
+                    {userProfile.phone ?? "N/A"}
                   </div>
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4" />
@@ -201,37 +227,41 @@ export default function PerfilPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {recentSightings.map((sighting, index) => (
-                        <div key={index} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                          <img
-                            src={sighting.photo || "/placeholder.svg"}
-                            alt={sighting.species}
-                            className="w-16 h-16 rounded-lg object-cover"
-                          />
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-emerald-800">{sighting.species}</h4>
-                            <p className="text-sm text-gray-600 italic">{sighting.scientificName}</p>
-                            <div className="flex items-center gap-2 mt-1">
-                              <MapPin className="h-3 w-3 text-gray-400" />
-                              <span className="text-xs text-gray-500">{sighting.location}</span>
+                      {recentSightings.length === 0 ? (
+                        <div className="text-center text-gray-500">No hay avistamientos recientes</div>
+                      ) : (
+                        recentSightings.map((sighting: any, index: number) => (
+                          <div key={index} className="flex items-center gap-4 p-3rounded-lg">
+                            <img
+                              src={sighting.photo || "/placeholder.svg"}
+                              alt={sighting.species}
+                              className="w-16 h-16 rounded-lg object-cover"
+                            />
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-emerald-800">{sighting.species}</h4>
+                              <p className="text-sm text-gray-600 italic">{sighting.scientificName}</p>
+                              <div className="flex items-center gap-2 mt-1">
+                                <MapPin className="h-3 w-3 text-gray-400" />
+                                <span className="text-xs text-gray-500">{sighting.location}</span>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <Badge
+                                variant={
+                                  sighting.rarity === "Raro"
+                                    ? "destructive"
+                                    : sighting.rarity === "Poco Común"
+                                      ? "default"
+                                      : "secondary"
+                                }
+                              >
+                                {sighting.rarity}
+                              </Badge>
+                              <div className="text-xs text-gray-500 mt-1">{sighting.date}</div>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <Badge
-                              variant={
-                                sighting.rarity === "Raro"
-                                  ? "destructive"
-                                  : sighting.rarity === "Poco Común"
-                                    ? "default"
-                                    : "secondary"
-                              }
-                            >
-                              {sighting.rarity}
-                            </Badge>
-                            <div className="text-xs text-gray-500 mt-1">{sighting.date}</div>
-                          </div>
-                        </div>
-                      ))}
+                        ))
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -248,7 +278,7 @@ export default function PerfilPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-3">
-                      {badges.map((badge, index) => (
+                      {badges.map((badge: any, index: number) => (
                         <div
                           key={index}
                           className={`p-3 rounded-lg text-center transition-all ${
@@ -257,7 +287,7 @@ export default function PerfilPage() {
                               : "bg-gray-100 border-2 border-gray-200 opacity-50"
                           }`}
                         >
-                          <div className="text-2xl mb-1">{badge.icon}</div>
+                          <div className="text-2xl mb-1">{badge.icon ?? '🏅'}</div>
                           <div className="text-xs font-medium">{badge.name}</div>
                           {badge.earned && <div className="text-xs text-emerald-600 mt-1">{badge.date}</div>}
                         </div>
@@ -285,29 +315,13 @@ export default function PerfilPage() {
                     <div className="flex justify-between">
                       <span className="text-sm">Progreso General</span>
                       <span className="font-semibold">
-                        {Math.round((userProfile.stats.speciesSeen / userProfile.stats.totalSpecies) * 100)}%
+                        {Math.round((userProfile.stats.speciesSeen / Math.max(1, userProfile.stats.totalSpecies)) * 100)}%
                       </span>
                     </div>
                   </CardContent>
                 </Card>
               </div>
             </div>
-          </TabsContent>
-
-          {/* Sightings Tab */}
-          <TabsContent value="sightings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Historial de Avistamientos</CardTitle>
-                <CardDescription>Todas tus observaciones de aves registradas en la plataforma</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-gray-500">
-                  <Camera className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Funcionalidad de historial completo próximamente</p>
-                </div>
-              </CardContent>
-            </Card>
           </TabsContent>
 
           {/* Achievements Tab */}
@@ -322,18 +336,22 @@ export default function PerfilPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {achievements.map((achievement, index) => (
-                      <div key={index} className="flex items-center gap-4 p-4 bg-emerald-50 rounded-lg">
-                        <div className="p-2 bg-emerald-600 rounded-full">
-                          <Trophy className="h-6 w-6 text-white" />
+                    {achievements.length === 0 ? (
+                      <div className="text-center text-gray-500">No hay logros registrados</div>
+                    ) : (
+                      achievements.map((achievement: any, index: number) => (
+                        <div key={index} className="flex items-center gap-4 p-4 bg-emerald-50 rounded-lg">
+                          <div className="p-2 bg-emerald-600 rounded-full">
+                            <Trophy className="h-6 w-6 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-emerald-800">{achievement.title}</h4>
+                            <p className="text-sm text-gray-600">{achievement.description}</p>
+                          </div>
+                          <Badge className="bg-emerald-600">+{achievement.points} pts</Badge>
                         </div>
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-emerald-800">{achievement.title}</h4>
-                          <p className="text-sm text-gray-600">{achievement.description}</p>
-                        </div>
-                        <Badge className="bg-emerald-600">+{achievement.points} pts</Badge>
-                      </div>
-                    ))}
+                      ))
+                    )}
                   </div>
                 </CardContent>
               </Card>

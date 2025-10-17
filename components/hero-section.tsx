@@ -1,6 +1,8 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Play, MapPin, Users, Award } from "lucide-react"
+
 
 export function HeroSection() {
   return (
@@ -53,12 +55,33 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
-              Comenzar Aventura
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"
+              onClick={() => {
+                const excursionesSection = document.getElementById("excursiones")
+                if (excursionesSection) {
+                  excursionesSection.scrollIntoView({ behavior: "smooth" })
+                }
+              }}
+            >
+              Explorar Excursiones
             </Button>
-            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent">
-              <Play className="w-4 h-4 mr-2" />
-              Ver Video
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white/30 text-white hover:bg-white/10"
+              asChild
+            >
+              <a
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2"
+              >
+                <Play className="w-4 h-4" />
+                <span>Ver Video</span>
+              </a>
             </Button>
           </div>
         </div>

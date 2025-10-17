@@ -85,7 +85,7 @@ export default function SobreNosotrosPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-16">
         <div className="container mx-auto px-4">
@@ -197,31 +197,31 @@ export default function SobreNosotrosPage() {
         </div>
 
         {/* Story */}
-        <Card className="mb-16 bg-gradient-to-r from-emerald-50 to-teal-50">
+        <Card className="mb-16">
           <CardHeader>
             <div className="flex items-center gap-3">
               <div className="p-2 bg-emerald-600 rounded-lg">
                 <Lightbulb className="h-6 w-6 text-white" />
               </div>
-              <CardTitle className="text-2xl text-emerald-800">Nuestra Historia</CardTitle>
+              <CardTitle className="text-2xl">Nuestra Historia</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
             <div className="prose prose-emerald max-w-none">
-              <p className="text-gray-700 mb-4 text-pretty">
+              <p className="text-gray-500 mb-4 text-pretty">
                 Avithrive nació en 2025 de la pasión compartida por las aves y el deseo de hacer el aviturismo más
                 accesible para todos los nicaragüenses y visitantes. Nuestro equipo multidisciplinario, compuesto por
                 biólogos, educadores, guías locales y desarrolladores tecnológicos, identificó la necesidad de una
                 plataforma que no solo conectara a los observadores de aves con los mejores sitios del país, sino que
                 también promoviera la conservación y la inclusión.
               </p>
-              <p className="text-gray-700 mb-4 text-pretty">
+              <p className="text-gray-500 mb-4 text-pretty">
                 Comenzamos documentando las rutas aviturísticas más importantes de Nicaragua, desde los bosques nubosos
                 de Matagalpa hasta los humedales de la costa del Pacífico. Trabajamos de la mano con comunidades
                 locales, guías experimentados y organizaciones de conservación para crear una experiencia auténtica y
                 sostenible.
               </p>
-              <p className="text-gray-700 text-pretty">
+              <p className="text-gray-500 text-pretty">
                 Hoy, Avithrive es más que una plataforma de aviturismo: es una comunidad vibrante de más de 2,000
                 observadores de aves que comparten su pasión, aprenden juntos y contribuyen activamente a la
                 conservación de las más de 500 especies de aves que habitan en nuestro hermoso país.
@@ -235,13 +235,13 @@ export default function SobreNosotrosPage() {
           <h2 className="text-3xl font-bold text-center text-emerald-800 mb-8">Nuestros Aliados</h2>
           <Card>
             <CardContent className="p-8">
-              <p className="text-center text-gray-600 mb-6 text-pretty">
+              <p className="text-center  mb-6 text-pretty">
                 Trabajamos en colaboración con organizaciones líderes en conservación, turismo y educación:
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 {partnerships.map((partner, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-emerald-50 rounded-lg">
-                    <Award className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+                  <div key={index} className="flex items-center gap-3 p-3 rounded-lg border border-gray-200">
+                    <Award className="h-5 w-5 flex-shrink-0" />
                     <span className="text-gray-700">{partner}</span>
                   </div>
                 ))}
